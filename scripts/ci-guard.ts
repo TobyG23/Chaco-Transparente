@@ -6,6 +6,7 @@ import {
   verifyExport,
 } from "./export-manifest";
 import { generateHeaders } from "./netlify-headers";
+import { noticeName, verifyNotices } from "./third-party-notices";
 
 const root = resolve(import.meta.dir, "..");
 const exportRoot = resolve(root, "packages/web/out");
@@ -74,6 +75,10 @@ export async function checkCi(
   if (!manifest.files.some((file) => file.path === "_headers")) {
     throw new Error("Export is missing generated _headers");
   }
+  if (!manifest.files.some((file) => file.path === noticeName)) {
+    throw new Error("Export is missing third-party notices");
+  }
+  await verifyNotices(artifactRoot);
   const actualHeaders = await readFile(
     resolve(artifactRoot, "_headers"),
     "utf8",

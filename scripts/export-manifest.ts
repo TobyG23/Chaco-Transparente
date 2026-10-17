@@ -28,7 +28,7 @@ const safeSegment = /^[A-Za-z0-9_-][A-Za-z0-9._-]*$/;
 const hashPattern = /^[a-f0-9]{64}$/;
 
 function allowedPath(path: string): boolean {
-  if (path === "_headers") return true;
+  if (path === "_headers" || path === "third-party-notices.txt") return true;
   if (htmlPaths.has(path)) return true;
   const parts = path.split("/");
   if (

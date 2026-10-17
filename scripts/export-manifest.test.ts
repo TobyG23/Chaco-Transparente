@@ -79,6 +79,20 @@ test("includes only the root Netlify headers file in the manifest", async () => 
   expect(scanExport(root)).rejects.toThrow("Unexpected export path");
 });
 
+test("includes only the reviewed third-party notices path and detects alteration", async () => {
+  const root = await fixture();
+  const notice = join(root, "third-party-notices.txt");
+  await writeFile(notice, "reviewed notices");
+  const approved = await scanExport(root);
+  expect(
+    approved.files.some((file) => file.path === "third-party-notices.txt"),
+  ).toBe(true);
+  await writeFile(notice, "changed notices");
+  expect(verifyExport(root, approved)).rejects.toThrow("Export differs");
+  await writeFile(join(root, "other-notices.txt"), "unreviewed");
+  expect(scanExport(root)).rejects.toThrow("Unexpected export path");
+});
+
 test("rejects unexpected assets and changed hashes", async () => {
   const root = await fixture();
   const before = await scanExport(root);

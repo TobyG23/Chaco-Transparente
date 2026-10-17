@@ -43,6 +43,8 @@ builtTest(
       expect(html).toContain("<main");
       expect(html).toContain("<h1");
       expect(html).toContain('href="#contenido"');
+      if (process.env.CHACO_FRESH_EXPORT === "1")
+        expect(html).toContain('href="/third-party-notices.txt"');
       expect(html).not.toContain("This page could not be found");
     }
     for (const { href } of navigation) {
@@ -58,10 +60,15 @@ builtTest(
       expect(html).toContain('href="#contenido"');
       expect(html).toContain("<main");
       expect(html).toContain('aria-current="page"');
+      if (process.env.CHACO_FRESH_EXPORT === "1")
+        expect(html).toContain('href="/third-party-notices.txt"');
       for (const [, target] of html.matchAll(
         /\bhref="(\/[^"?#]*)(?:[?#][^"]*)?"/g,
       )) {
-        if (target.startsWith("/_next/")) {
+        if (
+          target.startsWith("/_next/") ||
+          target === "/third-party-notices.txt"
+        ) {
           expect(files.has(join(outRoot, target.slice(1)))).toBe(true);
         } else {
           expect(files.has(join(outRoot, target, "index.html"))).toBe(true);
@@ -119,6 +126,14 @@ builtTest(
       expect(fuentes).not.toMatch(/\/download\/|\.csv(?:["?])/i);
       expect(proyecto).toContain('id="privacidad"');
       expect(proyecto).toContain("no un aviso de privacidad aprobado");
+      const notices = await readFile(
+        join(outRoot, "third-party-notices.txt"),
+        "utf8",
+      );
+      expect(notices).toContain("core-js 3.38.1");
+      expect(notices).toContain("React DOM");
+      expect(notices).toContain("Tailwind CSS 4.3.3");
+      expect(notices).toContain("Copyright (c) 2014-2024 Denis Pushkarev");
     }
     for (const view of views) expect(datos).toContain(view.title);
     for (const decision of pendingDecisions) expect(estado).toContain(decision);

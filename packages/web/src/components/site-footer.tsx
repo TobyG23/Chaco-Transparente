@@ -20,6 +20,7 @@ export function SiteFooter() {
           <Link href="/proyecto#privacidad">
             Privacidad (texto en revisión)
           </Link>
+          <a href="/third-party-notices.txt">Avisos de software de terceros</a>
           <a href={datasetUrl}>
             Fuente oficial <span aria-hidden="true">↗</span>
           </a>

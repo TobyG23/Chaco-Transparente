@@ -1,9 +1,14 @@
 import { expect, test } from "bun:test";
+import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import {
   assertPublicationBlocked,
   assertSafeExportText,
   assertSafeTrackedPaths,
+  checkCi,
 } from "./ci-guard";
+import { scanExport } from "./export-manifest";
 
 test("publication contracts must each remain exactly false", () => {
   const contract = "publicationAllowed: false;\nisPublished: false;";
@@ -31,6 +36,43 @@ test("tracked paths exclude private files and original or derived data", () => {
     "exports/report.csv",
   ]) {
     expect(() => assertSafeTrackedPaths([path])).toThrow();
+  }
+});
+
+test("downloaded export must match its manifest before use", async () => {
+  const temporary = await mkdtemp(join(tmpdir(), "chaco-ci-guard-"));
+  const exportRoot = join(temporary, "export");
+  const manifestPath = join(temporary, "manifest.json");
+  try {
+    await mkdir(exportRoot);
+    for (const page of [
+      "404",
+      "_not-found",
+      "datos",
+      "fuentes",
+      "metodologia",
+      "proyecto",
+      "estado",
+    ]) {
+      await mkdir(join(exportRoot, page));
+      await writeFile(join(exportRoot, page, "index.html"), "editorial");
+    }
+    await writeFile(join(exportRoot, "index.html"), "editorial");
+    await writeFile(join(exportRoot, "404.html"), "editorial");
+    await writeFile(join(exportRoot, "_headers"), "/\n");
+    await mkdir(join(exportRoot, "_next", "static", "chunks"), {
+      recursive: true,
+    });
+    await writeFile(
+      join(exportRoot, "_next", "static", "chunks", "app.js"),
+      "// editorial",
+    );
+    await writeFile(manifestPath, JSON.stringify(await scanExport(exportRoot)));
+    expect(await checkCi(exportRoot, manifestPath)).toBe(11);
+    await writeFile(join(exportRoot, "index.html"), "different!");
+    expect(checkCi(exportRoot, manifestPath)).rejects.toThrow("differs");
+  } finally {
+    await rm(temporary, { recursive: true, force: true });
   }
 });
 

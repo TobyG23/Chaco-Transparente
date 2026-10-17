@@ -1,6 +1,10 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
-import { scanExport } from "./export-manifest";
+import {
+  readApprovedManifest,
+  scanExport,
+  verifyExport,
+} from "./export-manifest";
 
 const root = resolve(import.meta.dir, "..");
 const exportRoot = resolve(root, "packages/web/out");
@@ -46,7 +50,10 @@ export function assertSafeExportText(path: string, text: string): void {
   }
 }
 
-export async function checkCi(): Promise<number> {
+export async function checkCi(
+  artifactRoot = exportRoot,
+  manifestPath?: string,
+): Promise<number> {
   const contract = await readFile(
     resolve(root, "packages/core/src/index.ts"),
     "utf8",
@@ -58,7 +65,11 @@ export async function checkCi(): Promise<number> {
   assertSafeTrackedPaths(
     new TextDecoder().decode(tracked.stdout).split("\0").filter(Boolean),
   );
-  const manifest = await scanExport(exportRoot);
+  const manifest = await scanExport(artifactRoot);
+  if (manifestPath) {
+    const approved = await readApprovedManifest(artifactRoot, manifestPath);
+    await verifyExport(artifactRoot, approved);
+  }
   if (!manifest.files.some((file) => file.path === "_headers")) {
     throw new Error("Export is missing generated _headers");
   }
@@ -71,14 +82,20 @@ export async function checkCi(): Promise<number> {
     throw new Error("Export is missing Next.js assets");
   }
   for (const file of manifest.files) {
-    const text = await readFile(resolve(exportRoot, file.path), "utf8");
+    const text = await readFile(resolve(artifactRoot, file.path), "utf8");
     assertSafeExportText(file.path, text);
   }
   return manifest.files.length;
 }
 
 if (import.meta.main) {
-  checkCi()
+  const args = Bun.argv.slice(2);
+  if (args.length !== 0 && (args.length !== 2 || args.some((arg) => !arg))) {
+    throw new Error(
+      "Usage: bun scripts/ci-guard.ts [<export-root> <manifest.json>]",
+    );
+  }
+  checkCi(args[0] ? resolve(args[0]) : exportRoot, args[1])
     .then((count) => {
       console.log(`CI export gate passed: ${count} inventoried files`);
     })

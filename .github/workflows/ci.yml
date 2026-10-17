@@ -35,6 +35,16 @@ jobs:
         run: bun run web:netlify
       - name: Check publication blocks and artifact contents
         run: bun scripts/ci-guard.ts
+      - name: Save export hashes outside the publish directory
+        run: bun scripts/export-manifest.ts inventory > "$RUNNER_TEMP/chaco-export-manifest.json"
+      - name: Upload export manifest for later verification
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: chaco-export-manifest
+          path: ${{ runner.temp }}/chaco-export-manifest.json
+          if-no-files-found: error
+          include-hidden-files: false
+          retention-days: 3
       - name: Upload reviewed static export for inspection only
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:

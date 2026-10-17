@@ -1,0 +1,115 @@
+name: Netlify deployment (disabled)
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    # Publication requires a separate, reviewed change to this literal false gate.
+    # Never replace it with a repository variable or enable it by adding secrets.
+    if: >-
+      ${{ false &&
+          github.event.workflow_run.conclusion == 'success' &&
+          github.event.workflow_run.event == 'push' &&
+          github.event.workflow_run.head_branch == 'main' &&
+          github.event.workflow_run.head_repository.id == github.event.repository.id &&
+          github.event.workflow_run.run_attempt == 1 }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    concurrency:
+      group: chaco-netlify-production
+      cancel-in-progress: false
+    environment: production
+    permissions:
+      contents: read
+      actions: read
+      deployments: write
+    env:
+      SOURCE_SHA: ${{ github.event.workflow_run.head_sha }}
+      SOURCE_RUN_ID: ${{ github.event.workflow_run.id }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Check source is still main
+        shell: bash
+        run: |
+          set -euo pipefail
+          current="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')"
+          test "$SOURCE_SHA" = "$current"
+      - name: Check out reviewed source without credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          persist-credentials: false
+      - name: Download export from successful CI run
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: chaco-static-export
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/chaco-verified-export
+          digest-mismatch: error
+      - name: Download matching SHA-256 manifest
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: chaco-export-manifest
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/chaco-manifest
+          digest-mismatch: error
+      - name: Set up Bun only for artifact verification
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.4.3
+      - name: Verify downloaded bytes and publication block
+        shell: bash
+        run: |
+          set -euo pipefail
+          bun scripts/ci-guard.ts "$RUNNER_TEMP/chaco-verified-export" "$RUNNER_TEMP/chaco-manifest/chaco-export-manifest.json"
+      - name: Recheck main and reserve the commit before publication
+        id: reserve
+        shell: bash
+        run: |
+          set -euo pipefail
+          current="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')"
+          test "$SOURCE_SHA" = "$current"
+          existing="$(gh api -X GET "repos/$GITHUB_REPOSITORY/deployments" -f sha="$SOURCE_SHA" -f environment=netlify-production --jq 'length')"
+          test "$existing" = 0 || { printf '%s\n' 'Deployment already attempted; reconcile manually.' >&2; exit 1; }
+          response="$(jq -n --arg ref "$SOURCE_SHA" '{ref: $ref, environment: "netlify-production", auto_merge: false, required_contexts: [], transient_environment: false}' | gh api -X POST "repos/$GITHUB_REPOSITORY/deployments" --input -)"
+          deployment_id="$(jq -er '.id' <<< "$response")"
+          printf 'deployment_id=%s\n' "$deployment_id" >> "$GITHUB_OUTPUT"
+      - name: Deploy only downloaded export, without a Netlify build
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$NETLIFY_AUTH_TOKEN" && test -n "$NETLIFY_SITE_ID"
+          current="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')"
+          test "$SOURCE_SHA" = "$current"
+          npm exec --yes --package=netlify-cli@27.13.0 -- netlify deploy \
+            --site "$NETLIFY_SITE_ID" --dir "$RUNNER_TEMP/chaco-verified-export" \
+            --no-build --prod --message "GitHub CI $SOURCE_SHA run $SOURCE_RUN_ID"
+      - name: Record outcome without automatically retrying
+        if: ${{ always() && steps.reserve.outputs.deployment_id != '' }}
+        env:
+          RESULT: ${{ job.status }}
+          DEPLOYMENT_ID: ${{ steps.reserve.outputs.deployment_id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          state=failure
+          if [ "$RESULT" = success ]; then state=success; fi
+          gh api -X POST "repos/$GITHUB_REPOSITORY/deployments/$DEPLOYMENT_ID/statuses" \
+            -f state="$state" -f description="CI run $SOURCE_RUN_ID; reconcile before any retry" >/dev/null
+          current="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')"
+          if [ "$SOURCE_SHA" != "$current" ]; then
+            printf '%s\n' 'Main advanced during deployment; inspect Netlify state manually.' >&2
+            exit 1
+          fi

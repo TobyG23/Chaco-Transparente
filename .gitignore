@@ -11,3 +11,6 @@ data/
 *.swp
 .DS_Store
 Thumbs.db
+.next/
+out/
+*.tsbuildinfo

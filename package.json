@@ -10,7 +10,10 @@
     "ingest": "bun packages/ingestion/src/cli.ts",
     "test": "bun test",
     "typecheck": "turbo run typecheck",
-    "lint": "biome check ."
+    "lint": "biome check .",
+    "web:dev": "bun run --filter @chaco/web dev",
+    "web:build": "bun run --filter @chaco/web build",
+    "web:verify": "NEXT_TELEMETRY_DISABLED=1 bun run web:build && bun test packages/web/test/export.test.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",

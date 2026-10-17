@@ -1,0 +1,7 @@
+# Arquitectura web
+
+`packages/web` es un workspace privado. `app/layout.tsx` proporciona idioma `es-AR`, metadatos `noindex,nofollow`, enlace para saltar al contenido, navegación, `main` y pie; `src/components/` contiene encabezado, pie e introducción reutilizables. `src/content.ts` guarda navegación, enlace al conjunto oficial, enlace al repositorio, descripciones de las dos vistas y decisiones pendientes. Rutas estáticas: `/`, `/datos`, `/fuentes`, `/metodologia`, `/proyecto`, `/estado`.
+
+`next.config.ts` configura `output: "export"` y `trailingSlash: true`; la salida local se crea en `packages/web/out/` y se ignora en Git. Las rutas corresponden a directorios con `index.html`. Las rutas y recursos `/_next/` suponen un host en la raíz del dominio que sirva esos directorios; alojar bajo un subdirectorio requeriría `basePath` y nueva verificación. No se ha elegido ni configurado hosting.
+
+La frontera es explícita: el frontend no depende de `@chaco/core`, `@chaco/ingestion` ni `data/`; no importa CSV, JSON presupuestario o variables de entorno de originales. No hay endpoints propios ni rutas dinámicas. Los enlaces externos redactados apuntan al conjunto oficial y al repositorio; el runtime de Next puede implementar navegación/prefetch, por lo que la ausencia de llamadas externas no se da por demostrada sin captura de red. `noindex` no es un control de acceso. La exportación estática tampoco configura cabeceras de seguridad del futuro servidor.

@@ -1,8 +1,10 @@
-# Chaco Transparente — núcleo offline (Misión 003)
+# Chaco Transparente — núcleo offline y portal editorial local
+
+La Misión 004 añade `packages/web`: seis páginas informativas locales sobre fuentes, metodología y estado, sin conectar ni publicar registros o importes. Para probar la exportación estática local: `bun run web:build`; para desarrollo local: `bun run web:dev`. La Misión 004.2 autoriza un commit local revisado, pero no push ni despliegue. Ver `MISSION-004.md`, `ARCHITECTURE-WEB.md`, `DESIGN-SYSTEM.md`, `CONTENT-STATUS.md` y `QA-WEB.md`. El texto siguiente conserva el alcance y la validación histórica del núcleo de Misión 003.
 
 Prototipo local para **dos** vistas de la ejecución presupuestaria provincial acumulada enero–diciembre 2022. No es una serie mensual ni un presupuesto municipal completo. Las vistas son desgloses distintos de la misma ejecución: **no sumarlas entre sí**. Fuente: [Ejecución Presupuestaria, Datos Abiertos Chaco](https://datosabiertos.chaco.gob.ar/dataset/ejecucionpresupuesto), organismo CKAN «MINISTERIO DE PLANIFICACION, ECONOMIA E INFRAESTRUCTURA». Los recursos están etiquetados CC BY 4.0 por el portal; su formulación legal/atribución y permisos de republicación requieren revisión.
 
-Los códigos `Q_*` se conservan tal como aparecen; la moneda, unidad y definiciones normativas de las etapas **no están confirmadas**. En particular `Q_PAG` no se presenta como desembolso efectivamente pagado. `publicationAllowed` e `isPublished` son siempre `false`, aunque la validación técnica local termine sin errores. No hay red, API, servidor ni ruta de publicación.
+Los códigos `Q_*` se conservan tal como aparecen; la moneda, unidad y definiciones normativas de las etapas **no están confirmadas**. En particular `Q_PAG` no se presenta como desembolso efectivamente pagado. `publicationAllowed` e `isPublished` son siempre `false`, aunque la validación técnica local termine sin errores. La CLI de ingestión no utiliza red, API, servidor ni ruta de publicación; el frontend separado sí puede iniciar un servidor de desarrollo local o generar HTML estático, sin autorización para desplegarlo.
 
 ## Ejecución
 

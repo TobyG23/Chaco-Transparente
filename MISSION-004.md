@@ -1,0 +1,7 @@
+# Misión 004 — portal editorial local
+
+Estado: implementación local; la Misión 004.2 autoriza un commit local condicionado a revisión y validación, sin push ni despliegue. El frontend en `packages/web` añade seis rutas: inicio, datos, fuentes, metodología, proyecto y estado. Es una capa informativa independiente, no un visor presupuestario. Usa Next.js App Router 16.4.2, React 19.3.1, TypeScript estricto y Tailwind CSS 4.3.3; genera una exportación estática local.
+
+El catálogo describe únicamente metadatos de dos recursos provinciales acumulados de enero a diciembre de 2022. No conecta los CSV, derivados ni importes; no crea API, consultas a la fuente ni base de datos. Las vistas son desgloses de una misma ejecución y no se suman. La interpretación de `Q_*` (incluido `Q_PAG`), moneda, unidad, derechos, privacidad y archivo sigue pendiente. El núcleo de ingestión no se modificó y mantiene `publicationAllowed=false`.
+
+Se fijaron dependencias exactas y se instaló con scripts deshabilitados. Véanse `ARCHITECTURE-WEB.md`, `DESIGN-SYSTEM.md`, `CONTENT-STATUS.md` y `QA-WEB.md` para contrato, diseño, trazabilidad y resultados. Antes de una eventual publicación se necesita una decisión separada sobre contenido, derechos, privacidad, accesibilidad probada en navegador, hosting y controles de seguridad. La Misión 004 inicial no autorizaba staging ni commit; la Misión 004.2 permite un único commit local revisado, sin autorizar push ni despliegue.

@@ -5,6 +5,7 @@ import {
   scanExport,
   verifyExport,
 } from "./export-manifest";
+import { generateHeaders } from "./netlify-headers";
 
 const root = resolve(import.meta.dir, "..");
 const exportRoot = resolve(root, "packages/web/out");
@@ -72,6 +73,13 @@ export async function checkCi(
   }
   if (!manifest.files.some((file) => file.path === "_headers")) {
     throw new Error("Export is missing generated _headers");
+  }
+  const actualHeaders = await readFile(
+    resolve(artifactRoot, "_headers"),
+    "utf8",
+  );
+  if (actualHeaders !== (await generateHeaders(artifactRoot))) {
+    throw new Error("Export _headers differs from generated policy");
   }
   if (
     !manifest.files.some(

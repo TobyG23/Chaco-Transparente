@@ -10,6 +10,7 @@ const routes = [
   "/metodologia/",
   "/proyecto/",
   "/estado/",
+  "/404/",
 ];
 const targets = await (await fetch(`${debug}/json`)).json();
 const page = targets.find((target) => target.type === "page");
@@ -73,7 +74,9 @@ try {
         main: Boolean(document.querySelector('main#contenido')),
         skip: Boolean(document.querySelector('a[href="#contenido"]')),
         focus: getComputedStyle(document.querySelector('main')).outlineStyle,
-        error: document.body.textContent.includes('Error response')
+        error: document.body.textContent.includes('Error response'),
+        privacy: [...document.querySelectorAll('footer a')].some((link) => link.pathname === '/proyecto/' && link.hash === '#privacidad'),
+        notice: location.pathname === '/proyecto/' ? Boolean(document.querySelector('#privacidad')) : true
       }))()`);
       console.log(`${width}px ${route} ${JSON.stringify(state)}`);
       if (route === "/" && width === 320) {
@@ -124,7 +127,9 @@ try {
         !state.main ||
         !state.skip ||
         state.links !== 6 ||
-        state.current !== 1 ||
+        state.current !== (route === "/404/" ? 0 : 1) ||
+        !state.privacy ||
+        !state.notice ||
         state.error ||
         state.contentWidth > state.width + 1
       ) {

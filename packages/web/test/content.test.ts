@@ -5,6 +5,7 @@ import {
   datasetUrl,
   navigation,
   pendingDecisions,
+  resourcePages,
   views,
 } from "../src/content";
 
@@ -25,6 +26,11 @@ test("navigation defines exactly the six editorial routes", () => {
     "https://datosabiertos.chaco.gob.ar/dataset/ejecucionpresupuesto",
   );
   expect(pendingDecisions.length).toBeGreaterThan(0);
+  expect(resourcePages).toHaveLength(2);
+  for (const resource of resourcePages) {
+    expect(resource.href).toBe(`${datasetUrl}/archivo/${resource.id}`);
+    expect(resource.href).not.toMatch(/\/download\/|\.csv(?:$|\?)/i);
+  }
 });
 
 test("each navigation route has a static page and no API routes", async () => {

@@ -2,7 +2,12 @@ import { expect, test } from "bun:test";
 import { existsSync } from "node:fs";
 import { readdir, readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
-import { navigation, pendingDecisions, views } from "../src/content";
+import {
+  navigation,
+  pendingDecisions,
+  resourcePages,
+  views,
+} from "../src/content";
 
 const webRoot = resolve(import.meta.dir, "..");
 const outRoot = join(webRoot, "out");
@@ -98,6 +103,23 @@ builtTest(
       join(outRoot, "estado", "index.html"),
       "utf8",
     );
+    const fuentes = await readFile(
+      join(outRoot, "fuentes", "index.html"),
+      "utf8",
+    );
+    const proyecto = await readFile(
+      join(outRoot, "proyecto", "index.html"),
+      "utf8",
+    );
+    if (process.env.CHACO_FRESH_EXPORT === "1") {
+      for (const resource of resourcePages) {
+        expect(fuentes).toContain(resource.title);
+        expect(fuentes).toContain(resource.href);
+      }
+      expect(fuentes).not.toMatch(/\/download\/|\.csv(?:["?])/i);
+      expect(proyecto).toContain('id="privacidad"');
+      expect(proyecto).toContain("no un aviso de privacidad aprobado");
+    }
     for (const view of views) expect(datos).toContain(view.title);
     for (const decision of pendingDecisions) expect(estado).toContain(decision);
     expect(datos).toContain("No se suman entre sí");

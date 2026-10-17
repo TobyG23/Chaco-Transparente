@@ -9,6 +9,7 @@ import {
   checkCi,
 } from "./ci-guard";
 import { scanExport } from "./export-manifest";
+import { generateHeaders } from "./netlify-headers";
 
 test("publication contracts must each remain exactly false", () => {
   const contract = "publicationAllowed: false;\nisPublished: false;";
@@ -55,11 +56,20 @@ test("downloaded export must match its manifest before use", async () => {
       "estado",
     ]) {
       await mkdir(join(exportRoot, page));
-      await writeFile(join(exportRoot, page, "index.html"), "editorial");
+      await writeFile(
+        join(exportRoot, page, "index.html"),
+        "<script>editorial</script>",
+      );
     }
-    await writeFile(join(exportRoot, "index.html"), "editorial");
-    await writeFile(join(exportRoot, "404.html"), "editorial");
-    await writeFile(join(exportRoot, "_headers"), "/\n");
+    await writeFile(
+      join(exportRoot, "index.html"),
+      "<script>editorial</script>",
+    );
+    await writeFile(join(exportRoot, "404.html"), "<script>editorial</script>");
+    await writeFile(
+      join(exportRoot, "_headers"),
+      await generateHeaders(exportRoot),
+    );
     await mkdir(join(exportRoot, "_next", "static", "chunks"), {
       recursive: true,
     });
@@ -69,6 +79,12 @@ test("downloaded export must match its manifest before use", async () => {
     );
     await writeFile(manifestPath, JSON.stringify(await scanExport(exportRoot)));
     expect(await checkCi(exportRoot, manifestPath)).toBe(11);
+    await writeFile(join(exportRoot, "_headers"), "/\n");
+    expect(checkCi(exportRoot, manifestPath)).rejects.toThrow("differs");
+    await writeFile(
+      join(exportRoot, "_headers"),
+      await generateHeaders(exportRoot),
+    );
     await writeFile(join(exportRoot, "index.html"), "different!");
     expect(checkCi(exportRoot, manifestPath)).rejects.toThrow("differs");
   } finally {

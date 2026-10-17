@@ -35,6 +35,28 @@ export default function ProyectoPage() {
           institucional.
         </p>
         <div className="rule" />
+        <p className="eyebrow">PRIVACIDAD · TEXTO PARA REVISIÓN</p>
+        <h2 id="privacidad">Qué ocurre al visitar este portal</h2>
+        <p>
+          La versión editorial revisada no incorpora cuentas, formularios,
+          analítica propia, píxeles de seguimiento ni almacenamiento deliberado
+          en el navegador. No solicita los archivos presupuestarios desde el
+          navegador. Las páginas y sus activos requieren solicitudes al
+          alojamiento; el proveedor y su red de entrega pueden tratar datos
+          técnicos de esas solicitudes, como dirección IP, URL, fecha y hora y
+          agente de usuario. Todavía debemos confirmar en la configuración y
+          condiciones reales de Netlify qué registros, métricas o cookies se
+          generan, quién accede a ellos, durante cuánto tiempo se conservan y en
+          qué jurisdicciones se tratan. También faltan la identificación y el
+          contacto de la persona responsable del portal. Este texto es una
+          explicación preliminar, no un aviso de privacidad aprobado.
+        </p>
+        <p>
+          Los enlaces al portal oficial y a GitHub llevan a sitios ajenos sólo
+          cuando decidís seguirlos; sus prácticas pueden ser diferentes. No
+          ofrecemos datos presupuestarios, filas ni importes en esta versión.
+        </p>
+        <div className="rule" />
         <p className="eyebrow">COLABORACIÓN</p>
         <h2>Preguntas, correcciones y código.</h2>
         <p>

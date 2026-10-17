@@ -17,6 +17,9 @@ export function SiteFooter() {
         <div className="footer-links">
           <Link href="/estado">Estado de los datos</Link>
           <Link href="/metodologia">Metodología</Link>
+          <Link href="/proyecto#privacidad">
+            Privacidad (texto en revisión)
+          </Link>
           <a href={datasetUrl}>
             Fuente oficial <span aria-hidden="true">↗</span>
           </a>

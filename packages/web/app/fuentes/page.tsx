@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageIntro } from "../../src/components/page-intro";
-import { datasetUrl } from "../../src/content";
+import { datasetUrl, resourcePages } from "../../src/content";
 
 export const metadata: Metadata = { title: "Fuentes y procedencia" };
 
@@ -19,9 +19,23 @@ export default function FuentesPage() {
         <p>
           Las copias auditadas corresponden a dos desgloses de la ejecución
           provincial acumulada de enero a diciembre de 2022, según los títulos
-          de los recursos. Las identificaciones y huellas de las copias están
-          registradas en el código de ingestión; el período no constituye una
-          interpretación normativa certificada por este proyecto.
+          de los recursos. Las huellas de las copias están registradas en el
+          código de ingestión; el período no constituye una interpretación
+          normativa certificada por este proyecto.
+        </p>
+        <ul>
+          {resourcePages.map((resource) => (
+            <li key={resource.id}>
+              <a className="text-link" href={resource.href}>
+                {resource.title} <span aria-hidden="true">↗</span>
+              </a>{" "}
+              (identificador: <code>{resource.id}</code>)
+            </li>
+          ))}
+        </ul>
+        <p>
+          Los enlaces llevan a las fichas oficiales de cada recurso, no a copias
+          ni descargas ofrecidas por este proyecto.
         </p>
         <a className="button button-primary" href={datasetUrl}>
           Visitar el conjunto oficial <span aria-hidden="true">↗</span>

@@ -2,7 +2,7 @@
 
 ## Datos de Chaco
 
-El prototipo lee dos copias externas de recursos del conjunto [Ejecución Presupuestaria del portal de Datos Abiertos de Chaco](https://datosabiertos.chaco.gob.ar/dataset/ejecucionpresupuesto), acumuladas enero–diciembre 2022. `packages/ingestion/src/parser.ts` conserva los UUID, URL y hashes esperados de los recursos. Los CSV oficiales no están incluidos en Git. La etiqueta CC BY 4.0 observada en el portal no resuelve por sí sola la atribución legal, la cláusula de compartir bajo la misma licencia señalada en la página «Acerca del portal», la privacidad ni los permisos de republicación de derivados. Tampoco licencia el código de este repositorio.
+El prototipo lee dos copias externas de recursos del conjunto [Ejecución Presupuestaria del portal de Datos Abiertos de Chaco](https://datosabiertos.chaco.gob.ar/dataset/ejecucionpresupuesto), acumuladas enero–diciembre 2022. La interfaz Fuentes identifica las [fichas de Finalidad/Función](https://datosabiertos.chaco.gob.ar/dataset/ejecucionpresupuesto/archivo/c45515ce-881d-4623-b10d-f422e395c3ca) y [objeto del gasto](https://datosabiertos.chaco.gob.ar/dataset/ejecucionpresupuesto/archivo/3ffb2f1f-656f-486d-8496-a36366e6cf25), comprobadas como páginas de metadatos el 2026-10-17; no aloja sus descargas. `packages/ingestion/src/parser.ts` conserva los UUID, URL y hashes esperados de las copias auditadas. Los CSV oficiales no están incluidos en Git. La etiqueta CC BY 4.0 observada en el portal no resuelve por sí sola la atribución legal, la cláusula de compartir bajo la misma licencia señalada en la página «Acerca del portal», la privacidad ni los permisos de republicación de derivados. Tampoco licencia el código de este repositorio.
 
 ## Mendoza Transparente
 

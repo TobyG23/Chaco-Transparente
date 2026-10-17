@@ -2,6 +2,21 @@ export const datasetUrl =
   "https://datosabiertos.chaco.gob.ar/dataset/ejecucionpresupuesto";
 export const repositoryUrl = "https://github.com/TobyG23/Chaco-Transparente";
 
+export const resourcePages = [
+  {
+    title:
+      "Ejecución por Finalidad/Función Acumulado de Enero a Diciembre 2022",
+    id: "c45515ce-881d-4623-b10d-f422e395c3ca",
+    href: "https://datosabiertos.chaco.gob.ar/dataset/ejecucionpresupuesto/archivo/c45515ce-881d-4623-b10d-f422e395c3ca",
+  },
+  {
+    title:
+      "Ejecución por objeto del gasto Acumulado de Enero a Diciembre del 2022",
+    id: "3ffb2f1f-656f-486d-8496-a36366e6cf25",
+    href: "https://datosabiertos.chaco.gob.ar/dataset/ejecucionpresupuesto/archivo/3ffb2f1f-656f-486d-8496-a36366e6cf25",
+  },
+] as const;
+
 export const navigation = [
   { href: "/", label: "Inicio" },
   { href: "/datos", label: "Datos" },

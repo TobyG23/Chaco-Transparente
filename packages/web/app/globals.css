@@ -11,6 +11,7 @@
   --line: #cbd3cf;
   --soft: #e9eeea;
   --focus: #a9472d;
+  --focus-on-dark: #cce6da;
 }
 * {
   box-sizing: border-box;
@@ -67,6 +68,10 @@ a:focus-visible,
 button:focus-visible {
   outline: 3px solid var(--focus);
   outline-offset: 4px;
+}
+.status-strip a:focus-visible,
+.site-footer a:focus-visible {
+  outline-color: var(--focus-on-dark);
 }
 main:focus {
   outline: 3px solid var(--focus);

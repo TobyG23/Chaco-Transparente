@@ -84,6 +84,11 @@ builtTest(
         /CHACO_(?:FINALIDAD|OBJETO)_CSV|rawCells|Q_NOMENT|publicationAllowed\s*[:=]\s*true|5ecf7a89a9df8c8a4d4cc1b44464cf6cf4f46108634faedc4639c794679cdab7|300bd7ce059bf22c94cbbe793326eac04153b93467841a75302828d21b43b5e0/,
       );
     }
+    const cssFiles = files.filter((file) => file.endsWith(".css"));
+    expect(cssFiles).toHaveLength(1);
+    const css = await readFile(cssFiles[0], "utf8");
+    expect(css).toMatch(/\.status-strip a:focus-visible[^}]*outline-color:/);
+    expect(css).toMatch(/\.site-footer a:focus-visible[^}]*outline-color:/);
     const datos = await readFile(join(outRoot, "datos", "index.html"), "utf8");
     const metodologia = await readFile(
       join(outRoot, "metodologia", "index.html"),

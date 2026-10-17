@@ -31,6 +31,7 @@ builtTest(
     ]) {
       const html = await readFile(join(outRoot, path), "utf8");
       expect(html).toContain('lang="es-AR"');
+      expect(html).toContain("Versión preliminar");
       expect(html).toContain("No encontramos esta página.");
       expect(html).toContain("Volver al inicio");
       expect(html).toContain('href="/"');
@@ -44,6 +45,8 @@ builtTest(
       expect(files.has(page)).toBe(true);
       const html = await readFile(page, "utf8");
       expect(html).toContain('lang="es-AR"');
+      expect(html).toContain("Versión preliminar");
+      expect(html).toContain("Proyecto independiente, no oficial");
       expect(html).toContain('name="robots"');
       expect(html).toContain("noindex");
       expect(html).toContain('id="contenido"');

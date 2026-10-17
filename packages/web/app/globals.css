@@ -111,6 +111,18 @@ main:focus {
   background: var(--canvas);
   border-bottom: 1px solid var(--line);
 }
+.preview-banner {
+  background: var(--dark);
+  color: white;
+  font-size: 0.82rem;
+}
+.preview-banner p {
+  margin: 0 auto;
+  padding-block: 9px;
+}
+.preview-banner strong {
+  color: #cce6da;
+}
 .header-inner {
   min-height: 93px;
   display: flex;

@@ -22,6 +22,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           Saltar al contenido
         </a>
         <SiteHeader />
+        <div className="preview-banner">
+          <p className="shell">
+            <strong>Versión preliminar</strong> · Proyecto independiente, no
+            oficial del Gobierno del Chaco.
+          </p>
+        </div>
         <main id="contenido" tabIndex={-1}>
           {children}
         </main>

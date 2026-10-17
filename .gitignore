@@ -1,0 +1,13 @@
+node_modules/
+.turbo/
+data/
+*.csv
+*.log
+.env*
+!*.example
+*.tmp
+*.bak
+*.orig
+*.swp
+.DS_Store
+Thumbs.db

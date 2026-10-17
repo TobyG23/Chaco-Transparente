@@ -1,0 +1,21 @@
+{
+  "name": "chaco-transparente",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.4.3",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "ingest": "bun packages/ingestion/src/cli.ts",
+    "test": "bun test",
+    "typecheck": "turbo run typecheck",
+    "lint": "biome check ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.15",
+    "@types/bun": "1.3.0",
+    "turbo": "2.9.14",
+    "typescript": "5.9.3"
+  }
+}

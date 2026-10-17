@@ -1,0 +1,11 @@
+# Procedencia y referencias
+
+## Datos de Chaco
+
+El prototipo lee dos copias externas de recursos del conjunto [Ejecución Presupuestaria del portal de Datos Abiertos de Chaco](https://datosabiertos.chaco.gob.ar/dataset/ejecucionpresupuesto), acumuladas enero–diciembre 2022. `packages/ingestion/src/parser.ts` conserva los UUID, URL y hashes esperados de los recursos. Los CSV oficiales no están incluidos en Git. La etiqueta CC BY 4.0 observada en el portal no resuelve por sí sola la atribución legal, la cláusula de compartir bajo la misma licencia señalada en la página «Acerca del portal», la privacidad ni los permisos de republicación de derivados. Tampoco licencia el código de este repositorio.
+
+## Mendoza Transparente
+
+[Mendoza Transparente](https://github.com/unllamas/mendoza-transparente), revisión examinada `72b14c8d36938050e1641f555fca45a4c3ed59f0`, fue una **referencia arquitectónica** durante el reconocimiento de Misión 001. Se observaron la separación de paquetes, el archivado con hash (`packages/core/src/fetch.ts`), el parser genérico (`packages/core/src/csv.ts`) y el pipeline de catálogo/exportación; el prototipo de Chaco implementa por separado una ingestión offline de CSV `;` y sus reglas específicas. Los informes de reconocimiento `01-original-architecture.md`, `02-reuse-matrix.md`, `04-security-licenses.md` y `07-executive-summary.md` se guardaron fuera de este repositorio durante la auditoría. No se trasladaron código, datos, geografía, scrapers, interfaz ni activos de Mendoza al destino. El metadato MIT observado para aquel repositorio no determina la licencia del código propio de Chaco, que sigue pendiente de decisión del titular.
+
+Ninguna relación de referencia implica aval de Mendoza Transparente ni del Gobierno del Chaco.

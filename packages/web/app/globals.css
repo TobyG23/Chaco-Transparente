@@ -503,6 +503,9 @@ main:focus {
   line-height: 1.75;
   margin: 0;
 }
+.not-found-action {
+  margin-top: 36px;
+}
 .compact-section {
   padding-block: 75px 110px;
 }

@@ -1,5 +1,7 @@
 # Cabeceras de seguridad — propuesta para una futura previsualización
 
+**Actualización 005.3-NETLIFY:** para el candidato Netlify, `scripts/netlify-headers.ts` genera el `_headers` raíz del export exacto. El build actual no contiene estilos inline: `style-src-elem 'self'` y `style-src-attr 'none'`. Si reaparecen atributos `style`, el generador calcula hashes (`'unsafe-hashes'`) en vez de la excepción provisional `'unsafe-inline'` de la tabla histórica siguiente. CSP permanece **Report-Only**, sin validación de navegador ni host. El límite de línea de Cloudflare citado abajo no debe atribuirse a Netlify. Ver `NETLIFY-DEPLOYMENT.md`.
+
 Estado: diseño local, no aplicado. La exportación de Next.js (`output: "export"`, `trailingSlash: true`) no configura las cabeceras del servidor. Sólo el proveedor seleccionado podrá aplicarlas y deberá cubrir `/`, las cinco rutas restantes, 404 y los archivos de `/_next/static/`. `noindex` no es un control de acceso.
 
 ## Política inicial, para validar en un entorno HTTPS autorizado

@@ -24,7 +24,21 @@ builtTest(
   "static export provides all editorial pages and working internal links",
   async () => {
     const files = new Set(await filesUnder(outRoot));
-    expect(files.has(join(outRoot, "404.html"))).toBe(true);
+    for (const path of [
+      "404.html",
+      "404/index.html",
+      "_not-found/index.html",
+    ]) {
+      const html = await readFile(join(outRoot, path), "utf8");
+      expect(html).toContain('lang="es-AR"');
+      expect(html).toContain("No encontramos esta página.");
+      expect(html).toContain("Volver al inicio");
+      expect(html).toContain('href="/"');
+      expect(html).toContain("<main");
+      expect(html).toContain("<h1");
+      expect(html).toContain('href="#contenido"');
+      expect(html).not.toContain("This page could not be found");
+    }
     for (const { href } of navigation) {
       const page = join(outRoot, href, "index.html");
       expect(files.has(page)).toBe(true);
@@ -59,7 +73,9 @@ builtTest(
       expect(relative).not.toMatch(
         /(?:^|\/)(?:data|archive|private|\.env[^/]*)\//i,
       );
-      expect(relative).toMatch(/\.(?:html|txt|js|css)$/i);
+      expect(
+        relative === "_headers" || /\.(?:html|txt|js|css)$/i.test(relative),
+      ).toBe(true);
       const content = await readFile(file, "utf8");
       expect(content).not.toMatch(
         /CHACO_(?:FINALIDAD|OBJETO)_CSV|rawCells|Q_NOMENT|publicationAllowed\s*[:=]\s*true|5ecf7a89a9df8c8a4d4cc1b44464cf6cf4f46108634faedc4639c794679cdab7|300bd7ce059bf22c94cbbe793326eac04153b93467841a75302828d21b43b5e0/,

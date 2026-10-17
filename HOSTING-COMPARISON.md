@@ -1,5 +1,7 @@
 # Comparación de alojamiento estático
 
+**Actualización 005.2-NETLIFY:** Netlify es ahora el proveedor **candidato designado por el propietario** para una primera previsualización editorial manual, todavía sin autorización de despliegue. La recomendación Cloudflare de Misión 005.1 que sigue abajo se conserva como alternativa histórica, no como elección actual. Ver `NETLIFY-DEPLOYMENT.md` y `NETLIFY-READINESS.md`; no extrapolar precios/cuotas de Cloudflare a Netlify.
+
 Consulta de documentación oficial: 2026-10-17. Precios y cuotas dependen del plan y pueden cambiar; comprobarlos de nuevo **antes** de aceptar condiciones. La exportación de Next (`output: "export"`, `trailingSlash: true`) genera `packages/web/out/`; las funciones de servidor y las cabeceras de `next.config` no forman parte de ese artefacto. Véase la [guía oficial de Next](https://nextjs.org/docs/app/guides/static-exports). Ni esta recomendación ni el plan gratuito autorizan un despliegue.
 
 | Opción | Costo y límites documentados | Dominio, HTTPS y cabeceras | Actualización, rollback y riesgos |

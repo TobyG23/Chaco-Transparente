@@ -1,5 +1,7 @@
 # Misión 005.1 — decisión técnica condicionada
 
+**Actualización 005.2-NETLIFY (2026-10-17):** la preferencia Cloudflare que consta a continuación es histórica; el propietario designó Netlify como candidato para una primera previsualización manual, **sin autorizar subir ni crear recursos**. Cloudflare queda como alternativa. Evidencia y condiciones actuales: `NETLIFY-DEPLOYMENT.md` y `NETLIFY-READINESS.md`.
+
 **Fecha de revisión: 2026-10-17. Estado: NO-GO para despliegue.** Se recomienda **Cloudflare Pages Direct Upload** como alternativa técnica para una futura previsualización exclusivamente editorial y estática, no como decisión de contratación ni autorización del propietario. Ninguna cuenta, recurso, dominio, DNS, integración Git, cabecera remota o despliegue se creó. `main` continúa en `a85fd140a2cb237fb3aad27e22cfeb513a226b56`; los CSV, derivados e importes permanecen fuera del frontend y `publicationAllowed=false` no se modificó.
 
 ## Fundamento y alternativa descartada por ahora

@@ -62,6 +62,23 @@ test("inventories exact bytes deterministically and verifies manifest schema", a
   ).toBe(first.files.length);
 });
 
+test("includes only the root Netlify headers file in the manifest", async () => {
+  const root = await fixture();
+  await writeFile(
+    join(root, "_headers"),
+    "/\n  X-Content-Type-Options: nosniff\n",
+  );
+  const approved = await scanExport(root);
+  expect(approved.files.some((file) => file.path === "_headers")).toBe(true);
+  await writeFile(
+    join(root, "_headers"),
+    "/\n  X-Content-Type-Options: altered\n",
+  );
+  expect(verifyExport(root, approved)).rejects.toThrow("Export differs");
+  await writeFile(join(root, "datos", "_headers"), "unexpected");
+  expect(scanExport(root)).rejects.toThrow("Unexpected export path");
+});
+
 test("rejects unexpected assets and changed hashes", async () => {
   const root = await fixture();
   const before = await scanExport(root);

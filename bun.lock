@@ -22,6 +22,14 @@
         "@chaco/core": "workspace:*",
       },
     },
+    "packages/research": {
+      "name": "@chaco/research",
+      "version": "0.1.0",
+      "dependencies": {
+        "@chaco/core": "workspace:*",
+        "@chaco/ingestion": "workspace:*",
+      },
+    },
     "packages/web": {
       "name": "@chaco/web",
       "version": "0.1.0",
@@ -64,6 +72,8 @@
     "@chaco/core": ["@chaco/core@workspace:packages/core"],
 
     "@chaco/ingestion": ["@chaco/ingestion@workspace:packages/ingestion"],
+
+    "@chaco/research": ["@chaco/research@workspace:packages/research"],
 
     "@chaco/web": ["@chaco/web@workspace:packages/web"],
 

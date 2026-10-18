@@ -70,7 +70,7 @@ test("frontend source does not import local archives or ingestion", async () => 
   for (const file of files) {
     const text = await readFile(file, "utf8");
     expect(text).not.toMatch(
-      /@chaco\/(?:ingestion|core)|(?:\.\.\/)+data\/|node:fs|CHACO_(?:FINALIDAD|OBJETO)_CSV/,
+      /@chaco\/(?:ingestion|core|research)|(?:\.\.\/)+(?:data|research)\/|node:fs|CHACO_(?:FINALIDAD|OBJETO)_CSV/,
     );
   }
   const estado = await readFile(join(webRoot, "app/estado/page.tsx"), "utf8");

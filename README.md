@@ -4,7 +4,19 @@
 
 Prototipo local para **dos** vistas de la ejecución presupuestaria provincial acumulada enero–diciembre 2022. No es una serie mensual ni un presupuesto municipal completo. Las vistas son desgloses distintos de la misma ejecución: **no sumarlas entre sí**. Fuente: [Ejecución Presupuestaria, Datos Abiertos Chaco](https://datosabiertos.chaco.gob.ar/dataset/ejecucionpresupuesto), organismo CKAN «MINISTERIO DE PLANIFICACION, ECONOMIA E INFRAESTRUCTURA». Los recursos están etiquetados CC BY 4.0 por el portal; su formulación legal/atribución y permisos de republicación requieren revisión.
 
-Los códigos `Q_*` se conservan tal como aparecen; la moneda, unidad, definición de `Q_VAR` y definiciones normativas de las etapas **no están confirmadas**. En particular `Q_PAG` no se presenta como desembolso efectivamente pagado. `publicationAllowed` e `isPublished` son siempre `false` **para datos reales** en el núcleo, aunque la validación técnica local termine sin errores; incorporar demostraciones sintéticas no cambia estos indicadores ni relaja ese bloqueo. La CLI de ingestión no utiliza red, API, servidor ni ruta de publicación; el frontend separado puede iniciar un servidor de desarrollo local o generar HTML estático, sin autorización de despliegue.
+Los códigos `Q_*` se conservan tal como aparecen; la moneda, unidad, definición de `Q_VAR` y definiciones normativas de las etapas **no están confirmadas**. En particular `Q_PAG` no se presenta como desembolso efectivamente pagado. `publicationAllowed` e `isPublished` son siempre `false` **para datos reales** en el núcleo, aunque la validación técnica local termine sin errores; incorporar demostraciones sintéticas no cambia estos indicadores ni relaja ese bloqueo. La CLI de ingestión no utiliza red, API, servidor ni ruta de publicación; la herramienta de investigación local también opera sin servidor y sólo se inicia explícitamente. El frontend separado puede iniciar un servidor de desarrollo local o generar HTML estático, sin autorización de despliegue.
+
+## Explorador oficial local (terminal, sin servidor)
+
+Desde la raíz confiable del repositorio, con Bun 1.4.3 y dependencias instaladas, ejecutar **explícitamente**:
+
+```text
+bun run research -- "C:\ruta\absoluta\finalidad-original.csv" "C:\ruta\absoluta\objeto-original.csv"
+```
+
+Las rutas deben ser absolutas y apuntar a las dos copias originales verificadas; un hash/tamaño incorrecto impide abrir la sesión. Este comando no sirve ninguna página ni abre puertos: la interfaz aparece en la terminal hasta escribir `quit`. Escribir `help` para ver los comandos: `view finalidad|objeto`, `search texto`, `filter COLUMNA valor exacto` (sin valor elimina ese filtro), `sort COLUMNA asc|desc`, `page N`, `inspect LÍNEA`, `dictionary`, `quality`, `evidence` y `clear`. Se muestran 25 filas por página; `inspect` utiliza el número de línea física del CSV. Evitar copiar/transmitir capturas y salidas de esta terminal: contienen filas oficiales. No hay exportación de filas a archivo porque no se puede garantizar un destino seguro en todos los equipos. No introducir contraseñas ni tokens. Los dos CSV permanecen fuera de Git; no usar `bun run web:dev` ni `/datos` para consultarlos: `/datos` sigue siendo exclusivamente sintético.
+
+`review_required` indica que pasó el control técnico pero **no** que se haya certificado semántica, unidad, moneda, derechos, privacidad ni publicación. `rejected` identifica errores QA que exigen investigación; ambos mantienen `publicationAllowed=false` y filas `isPublished=false`. La ficha de `Q_VAR` es contradictoria entre vistas: la alerta heurística de QA no establece su fórmula. No sumar totales de las dos vistas. Ver la matriz por indicador en `PROVENANCE.md`.
 
 ## Ejecución
 

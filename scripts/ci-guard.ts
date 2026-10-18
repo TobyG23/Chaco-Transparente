@@ -66,6 +66,12 @@ export async function checkCi(
     "utf8",
   );
   assertPublicationBlocked(contract);
+  const webPackage = await readFile(
+    resolve(root, "packages/web/package.json"),
+    "utf8",
+  );
+  if (/"@chaco\/(?:research|ingestion|core)"/.test(webPackage))
+    throw new Error("Web workspace must not depend on research or ingestion");
   const tracked = Bun.spawnSync(["git", "ls-files", "-z"], { cwd: root });
   if (tracked.exitCode !== 0)
     throw new Error("Could not inspect tracked files");

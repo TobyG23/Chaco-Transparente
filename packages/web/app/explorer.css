@@ -1,0 +1,203 @@
+.explorer {
+  padding-block: 58px 72px;
+}
+.explorer-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.explorer-heading h2 {
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
+  margin: 0;
+}
+.demo-badge {
+  display: inline-block;
+  padding: 10px 14px;
+  background: var(--dark);
+  color: white;
+  font-size: 0.82rem;
+  max-width: 100%;
+}
+.explorer-context {
+  max-width: 760px;
+  color: var(--muted);
+  margin: 20px 0 30px;
+}
+.explorer-controls {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 15px;
+}
+.explorer-controls label {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+  font-size: 0.83rem;
+  font-weight: 700;
+}
+.explorer-controls select,
+.explorer-controls input {
+  width: 100%;
+  min-width: 0;
+  min-height: 46px;
+  padding: 8px 10px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  font: inherit;
+  font-weight: 400;
+}
+.explorer-controls select:focus-visible,
+.explorer-controls input:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+.explorer-status {
+  margin: 24px 0 10px;
+  font-weight: 700;
+}
+.explorer-table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  background: var(--paper);
+}
+.explorer-table-wrap:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+.explorer-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 660px;
+  font-size: 0.88rem;
+}
+.explorer-table caption {
+  text-align: left;
+  padding: 12px 16px;
+  background: var(--soft);
+  font-weight: 700;
+}
+.explorer-table th,
+.explorer-table td {
+  text-align: left;
+  border-top: 1px solid var(--line);
+  padding: 12px 16px;
+}
+.explorer-table thead {
+  background: var(--soft);
+}
+.explorer-table .numeric {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.explorer-pages {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+}
+.explorer-pages button,
+.explorer-message button,
+.demo-diagnostics button {
+  padding: 9px 14px;
+  background: var(--blue);
+  border: 1px solid var(--blue);
+  color: white;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85rem;
+}
+.demo-diagnostics button {
+  margin-top: 12px;
+}
+.explorer-table thead button {
+  border: 0;
+  padding: 4px 0;
+  background: transparent;
+  color: var(--blue);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  text-align: left;
+}
+.explorer-pages button:disabled {
+  background: var(--soft);
+  color: var(--muted);
+  border-color: var(--line);
+  cursor: not-allowed;
+}
+.explorer-message {
+  padding: 24px;
+  background: var(--soft);
+  margin: 12px 0;
+}
+.explorer-visual {
+  border-top: 1px solid var(--line);
+  margin-top: 36px;
+  padding-top: 28px;
+}
+.explorer-visual h3 {
+  font-family: Georgia, serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+}
+.explorer-visual p {
+  color: var(--muted);
+  max-width: 750px;
+  font-size: 0.88rem;
+}
+.mini-bars {
+  padding: 0;
+  list-style: none;
+  max-width: 770px;
+}
+.mini-bars li {
+  display: grid;
+  grid-template-columns: minmax(0, 190px) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  margin: 11px 0;
+  font-size: 0.85rem;
+}
+.mini-bar-track {
+  height: 18px;
+  background: var(--soft);
+}
+.mini-bar-track span {
+  display: block;
+  height: 100%;
+  background: var(--blue);
+}
+.mini-bars li > span {
+  overflow-wrap: anywhere;
+}
+.demo-diagnostics {
+  margin-top: 26px;
+  font-size: 0.83rem;
+}
+.demo-diagnostics summary {
+  cursor: pointer;
+  color: var(--blue);
+}
+@media (max-width: 860px) {
+  .explorer-controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 520px) {
+  .explorer-controls {
+    grid-template-columns: 1fr;
+  }
+  .mini-bars li {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .mini-bar-track {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}

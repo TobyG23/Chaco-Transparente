@@ -45,6 +45,7 @@ export function assertSafeTrackedPaths(paths: string[]): void {
 export function assertSafeExportText(path: string, text: string): void {
   const forbidden = [
     /CHACO_(?:FINALIDAD|OBJETO)_CSV|rawCells|Q_NOMENT/i,
+    /5ecf7a89a9df8c8a4d4cc1b44464cf6cf4f46108634faedc4639c794679cdab7|300bd7ce059bf22c94cbbe793326eac04153b93467841a75302828d21b43b5e0/i,
     /publicationAllowed\s*[:=]\s*true|isPublished\s*[:=]\s*true/i,
     /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/,
     /(?:gh[pousr]_|github_pat_)[A-Za-z0-9_]{20,}/,

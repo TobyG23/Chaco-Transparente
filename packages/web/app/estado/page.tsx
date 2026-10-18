@@ -22,9 +22,9 @@ export default function EstadoPage() {
             <p className="eyebrow">DISPONIBILIDAD</p>
             <h2>Qué se puede consultar hoy</h2>
             <p>
-              La descripción de las dos vistas, sus fuentes, el método y los
-              límites del proyecto. El catálogo no ofrece tablas, descargas ni
-              importes.
+              Las fuentes y el método, más un explorador interactivo con tabla y
+              cantidades ficticias rotuladas como demostración. No ofrece filas,
+              descargas ni importes presupuestarios oficiales.
             </p>
           </div>
           <span className="state-pill">

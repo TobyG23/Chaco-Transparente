@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./explorer.css";
 
 :root {
   --canvas: #f7f5ef;

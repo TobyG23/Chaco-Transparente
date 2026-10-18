@@ -12,6 +12,8 @@ import {
 const webRoot = resolve(import.meta.dir, "..");
 const outRoot = join(webRoot, "out");
 const builtTest = existsSync(join(outRoot, "index.html")) ? test : test.skip;
+const syntheticDisclaimer =
+  "Datos sintéticos de demostración · no son registros oficiales";
 // Run `bun run web:verify` for a mandatory fresh-build gate; a plain test run may skip or inspect an older export.
 
 async function filesUnder(directory: string): Promise<string[]> {
@@ -108,8 +110,9 @@ builtTest(
           /\.(?:html|txt|js|css)$/i.test(relative),
       ).toBe(true);
       const content = await readFile(file, "utf8");
+      // Scan every exported payload, including JS chunks, HTML and RSC .txt files.
       expect(content).not.toMatch(
-        /CHACO_(?:FINALIDAD|OBJETO)_CSV|rawCells|Q_NOMENT|publicationAllowed\s*[:=]\s*true|5ecf7a89a9df8c8a4d4cc1b44464cf6cf4f46108634faedc4639c794679cdab7|300bd7ce059bf22c94cbbe793326eac04153b93467841a75302828d21b43b5e0/,
+        /CHACO_(?:FINALIDAD|OBJETO)_CSV|rawCells|Q_NOMENT|publicationAllowed\s*[:=]\s*true|5ecf7a89a9df8c8a4d4cc1b44464cf6cf4f46108634faedc4639c794679cdab7|300bd7ce059bf22c94cbbe793326eac04153b93467841a75302828d21b43b5e0/i,
       );
     }
     const cssFiles = files.filter((file) => file.endsWith(".css"));
@@ -135,6 +138,15 @@ builtTest(
       "utf8",
     );
     if (process.env.CHACO_FRESH_EXPORT === "1") {
+      expect(datos).toContain(syntheticDisclaimer);
+      const clientScripts = await Promise.all(
+        files
+          .filter((file) => file.endsWith(".js"))
+          .map((file) => readFile(file, "utf8")),
+      );
+      expect(
+        clientScripts.some((script) => script.includes(syntheticDisclaimer)),
+      ).toBe(true);
       for (const resource of resourcePages) {
         expect(fuentes).toContain(resource.title);
         expect(fuentes).toContain(resource.href);

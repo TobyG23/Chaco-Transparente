@@ -1,18 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageIntro } from "../../src/components/page-intro";
+import { SyntheticExplorer } from "../../src/components/synthetic-explorer";
 import { views } from "../../src/content";
 
-export const metadata: Metadata = { title: "Catálogo de datos" };
+export const metadata: Metadata = { title: "Explorador de datos" };
 
 export default function DatosPage() {
   return (
     <>
-      <PageIntro eyebrow="01 / CATÁLOGO" title="Qué estamos examinando.">
-        Dos desgloses de la ejecución presupuestaria provincial acumulada de
-        enero a diciembre de 2022. Por ahora, este catálogo describe su alcance:
-        no ofrece consultas, importes ni descargas.
+      <PageIntro eyebrow="01 / DATOS" title="Explorar sin confundir.">
+        Probá búsquedas, filtros y orden en dos vistas con datos enteramente
+        sintéticos. Los registros e importes de la ejecución provincial
+        acumulada de enero a diciembre de 2022 siguen bloqueados para
+        publicación.
       </PageIntro>
+      <div className="shell">
+        <SyntheticExplorer />
+      </div>
       <section
         className="shell section compact-section"
         aria-labelledby="vistas"
@@ -31,7 +36,7 @@ export default function DatosPage() {
               <h3>{view.title}</h3>
               <p>{view.description}</p>
               <span className="view-tag">
-                Sólo metadatos · importes no disponibles
+                Ficha oficial · importes reales no disponibles
               </span>
             </article>
           ))}

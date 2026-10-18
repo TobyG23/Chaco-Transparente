@@ -11,6 +11,20 @@ import {
 
 const webRoot = resolve(import.meta.dir, "..");
 
+async function sourceFilesUnder(directory: string): Promise<string[]> {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const nested = await Promise.all(
+    entries.map(async (entry) => {
+      const absolute = join(directory, entry.name);
+      if (entry.isDirectory()) return sourceFilesUnder(absolute);
+      return entry.isFile() && /\.(?:[cm]?[jt]sx?)$/.test(entry.name)
+        ? [absolute]
+        : [];
+    }),
+  );
+  return nested.flat();
+}
+
 test("navigation defines exactly the six editorial routes", () => {
   expect(navigation.map((item) => item.href)).toEqual([
     "/",
@@ -49,16 +63,12 @@ test("each navigation route has a static page and no API routes", async () => {
 
 test("frontend source does not import local archives or ingestion", async () => {
   const files = [
-    "src/content.ts",
-    "src/components/site-header.tsx",
-    "src/components/site-footer.tsx",
-    "src/components/page-intro.tsx",
-    "app/layout.tsx",
-    "app/page.tsx",
-    ...navigation.slice(1).map((item) => `app${item.href}/page.tsx`),
+    ...(await sourceFilesUnder(join(webRoot, "src"))),
+    ...(await sourceFilesUnder(join(webRoot, "app"))),
   ];
+  expect(files.length).toBeGreaterThan(navigation.length);
   for (const file of files) {
-    const text = await readFile(join(webRoot, file), "utf8");
+    const text = await readFile(file, "utf8");
     expect(text).not.toMatch(
       /@chaco\/(?:ingestion|core)|(?:\.\.\/)+data\/|node:fs|CHACO_(?:FINALIDAD|OBJETO)_CSV/,
     );

@@ -35,7 +35,10 @@ export default function FuentesPage() {
         </ul>
         <p>
           Los enlaces llevan a las fichas oficiales de cada recurso, no a copias
-          ni descargas ofrecidas por este proyecto.
+          ni descargas ofrecidas por este proyecto. La consulta de sus metadatos
+          se realizó el 2026-10-18; esa fecha no acredita una nueva obtención de
+          los CSV. El metadato temporal del conjunto termina en agosto de 2022,
+          mientras estos títulos declaran acumulado hasta diciembre.
         </p>
         <a className="button button-primary" href={datasetUrl}>
           Visitar el conjunto oficial <span aria-hidden="true">↗</span>

@@ -28,6 +28,11 @@ test("fixture is explicitly fictional and has unique view-specific IDs", () => {
       ids.add(row.id);
       expect(row.entity.length).toBeGreaterThan(0);
       expect(row.category.length).toBeGreaterThan(0);
+      expect(
+        view === "objeto"
+          ? (row.partida?.length ?? 0) > 0
+          : row.partida === undefined,
+      ).toBe(true);
       expect(row.source.length).toBeGreaterThan(0);
       expect(Number.isSafeInteger(row.amount) && row.amount >= 0).toBe(true);
     }
@@ -95,6 +100,30 @@ test("exact filters combine with search and remain scoped to a view", () => {
   expect(
     querySyntheticRows({ view: "finalidad", category: "", source: "" }).total,
   ).toBe(8);
+});
+
+test("fictional object partida combines with entity, category and source without crossing views", () => {
+  expect(
+    querySyntheticRows({
+      view: "objeto",
+      entity: "Casa Nube",
+      category: "Cartón estelar",
+      partida: "Partida ficticia de ejemplo",
+      source: "Fondo de papel",
+    }).rows.map((row) => row.id),
+  ).toEqual(["o-02"]);
+  expect(
+    querySyntheticRows({
+      view: "finalidad",
+      partida: "Partida ficticia de ejemplo",
+    }).total,
+  ).toBe(0);
+  expect(
+    querySyntheticRows({
+      view: "objeto",
+      search: "PARTIDA FICTICIA DE EJEMPLO",
+    }).rows.map((row) => row.id),
+  ).toEqual(["o-02"]);
 });
 
 test("sorts every field in both directions with deterministic ID tie-breaks", () => {

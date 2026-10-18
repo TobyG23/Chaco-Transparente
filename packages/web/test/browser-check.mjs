@@ -62,9 +62,11 @@ const explorerSnapshot = `(() => {
     badge: explorer.querySelector('.demo-badge')?.textContent.trim(),
     view: controls[0]?.value,
     search: explorer.querySelector('input[type="search"]')?.value,
-    category: controls[1]?.value,
-    source: controls[2]?.value,
-    categories: [...(controls[1]?.options ?? [])].map((option) => option.value),
+    entity: explorer.querySelector('select[aria-label="Entidad ficticia"]')?.value,
+    category: explorer.querySelector('.explorer-controls label:nth-child(4) select')?.value,
+    partida: explorer.querySelector('select[aria-label="Partida ficticia"]')?.value,
+    source: explorer.querySelector('.explorer-controls label:last-child select')?.value,
+    categories: [...(explorer.querySelector('.explorer-controls label:nth-child(4) select')?.options ?? [])].map((option) => option.value),
     column: explorer.querySelector('thead th:nth-child(2)')?.textContent.trim(),
     amountSort: explorer.querySelector('thead th:nth-child(4)')?.getAttribute('aria-sort'),
     rows: rows.map((row) => [...row.cells].map((cell) => cell.textContent.trim())),
@@ -163,7 +165,9 @@ async function checkExplorer(width) {
   check(
     state.rows.length === 5 &&
       state.search === "" &&
+      state.entity === "" &&
       state.category === "" &&
+      state.partida === "" &&
       state.source === "",
     `${label} view reset`,
     state,
@@ -198,7 +202,17 @@ async function checkExplorer(width) {
   );
 
   await setControl(
-    ".explorer-controls label:nth-child(3) select",
+    '.explorer-controls select[aria-label="Entidad ficticia"]',
+    "Club Cometa",
+  );
+  state = await waitForExplorer(
+    `${label} entity filter`,
+    (s) =>
+      s.entity === "Club Cometa" &&
+      s.status?.startsWith("3 resultados sintéticos"),
+  );
+  await setControl(
+    ".explorer-controls label:nth-child(4) select",
     "Lápices mágicos",
   );
   state = await waitForExplorer(
@@ -212,7 +226,15 @@ async function checkExplorer(width) {
   );
 
   await setControl(
-    ".explorer-controls label:nth-child(4) select",
+    '.explorer-controls select[aria-label="Partida ficticia"]',
+    "Partida ficticia de muestra",
+  );
+  state = await waitForExplorer(
+    `${label} partida filter`,
+    (s) => s.partida === "Partida ficticia de muestra" && s.rows.length === 2,
+  );
+  await setControl(
+    ".explorer-controls label:last-child select",
     "Caja de colores",
   );
   state = await waitForExplorer(
@@ -237,7 +259,9 @@ async function checkExplorer(width) {
     (s) =>
       s.view === "finalidad" &&
       s.search === "" &&
+      s.entity === "" &&
       s.category === "" &&
+      s.partida === undefined &&
       s.source === "" &&
       s.rows.length === 5 &&
       s.page === "Página 1 de 2",

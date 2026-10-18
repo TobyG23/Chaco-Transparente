@@ -8,12 +8,16 @@ export const resourcePages = [
       "Ejecución por Finalidad/Función Acumulado de Enero a Diciembre 2022",
     id: "c45515ce-881d-4623-b10d-f422e395c3ca",
     href: "https://datosabiertos.chaco.gob.ar/dataset/ejecucionpresupuesto/archivo/c45515ce-881d-4623-b10d-f422e395c3ca",
+    dimensions: "Entidad · finalidad/función · fuente (CODFTE)",
+    metadataChecked: "2026-10-18",
   },
   {
     title:
       "Ejecución por objeto del gasto Acumulado de Enero a Diciembre del 2022",
     id: "3ffb2f1f-656f-486d-8496-a36366e6cf25",
     href: "https://datosabiertos.chaco.gob.ar/dataset/ejecucionpresupuesto/archivo/3ffb2f1f-656f-486d-8496-a36366e6cf25",
+    dimensions: "Entidad · grupo/partida · fuente (Q_FTE)",
+    metadataChecked: "2026-10-18",
   },
 ] as const;
 

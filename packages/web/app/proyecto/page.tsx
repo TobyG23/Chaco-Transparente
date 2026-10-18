@@ -63,7 +63,17 @@ export default function ProyectoPage() {
         </p>
         <div className="rule" />
         <p className="eyebrow">COLABORACIÓN</p>
-        <h2>Preguntas, correcciones y código.</h2>
+        <h2 id="colaboracion">Preguntas, correcciones y código.</h2>
+        <p>
+          Para aportar una aclaración pública, abrí una incidencia en el
+          repositorio indicando la ficha oficial, el identificador del recurso,
+          el campo o definición observada y un enlace a documentación de
+          respaldo. Revisaremos cada aporte contra la fuente antes de cambiar la
+          explicación y dejaremos constancia de la corrección; no alteraremos
+          silenciosamente valores originales. No publiques datos personales,
+          filas, importes ni expedientes privados en incidencias abiertas. No
+          hay aquí un canal seguro para documentación sensible.
+        </p>
         <p>
           Podés revisar el repositorio, los criterios de contribución y los
           pendientes. Evitá publicar información sensible en incidencias
@@ -73,8 +83,11 @@ export default function ProyectoPage() {
           no abarcan recursos oficiales ni conceden permiso para republicar
           datos.
         </p>
-        <a className="button button-primary" href={repositoryUrl}>
-          Ver el repositorio <span aria-hidden="true">↗</span>
+        <a
+          className="button button-primary"
+          href={`${repositoryUrl}/issues/new`}
+        >
+          Proponer una aclaración pública <span aria-hidden="true">↗</span>
         </a>
         <p className="secondary-action">
           <Link className="text-link" href="/estado">

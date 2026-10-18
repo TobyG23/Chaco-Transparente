@@ -6,6 +6,7 @@ export type SyntheticRow = Readonly<{
   view: View;
   entity: string;
   category: string;
+  partida?: string; // Fictional object-view label only.
   source: string;
   amount: number; // Fictional units, not pesos or any actual budget amount.
 }>;
@@ -90,6 +91,7 @@ const rowsByView: Readonly<Record<View, readonly SyntheticRow[]>> = {
     {
       id: "o-01",
       view: "objeto",
+      partida: "Partida ficticia de muestra",
       entity: "Club Cometa",
       category: "Lápices mágicos",
       source: "Caja de colores",
@@ -98,6 +100,7 @@ const rowsByView: Readonly<Record<View, readonly SyntheticRow[]>> = {
     {
       id: "o-02",
       view: "objeto",
+      partida: "Partida ficticia de ejemplo",
       entity: "Casa Nube",
       category: "Cartón estelar",
       source: "Fondo de papel",
@@ -106,6 +109,7 @@ const rowsByView: Readonly<Record<View, readonly SyntheticRow[]>> = {
     {
       id: "o-03",
       view: "objeto",
+      partida: "Partida ficticia de muestra",
       entity: "Mesa Arcoíris",
       category: "Cintas de arcoíris",
       source: "Caja de colores",
@@ -114,6 +118,7 @@ const rowsByView: Readonly<Record<View, readonly SyntheticRow[]>> = {
     {
       id: "o-04",
       view: "objeto",
+      partida: "Partida ficticia de muestra",
       entity: "Club Cometa",
       category: "Lápices mágicos",
       source: "Fondo de papel",
@@ -122,6 +127,7 @@ const rowsByView: Readonly<Record<View, readonly SyntheticRow[]>> = {
     {
       id: "o-05",
       view: "objeto",
+      partida: "Partida ficticia de muestra",
       entity: "Casa Nube",
       category: "Cartón estelar",
       source: "Caja de colores",
@@ -130,6 +136,7 @@ const rowsByView: Readonly<Record<View, readonly SyntheticRow[]>> = {
     {
       id: "o-06",
       view: "objeto",
+      partida: "Partida ficticia de muestra",
       entity: "Mesa Arcoíris",
       category: "Cintas de arcoíris",
       source: "Fondo de papel",
@@ -138,6 +145,7 @@ const rowsByView: Readonly<Record<View, readonly SyntheticRow[]>> = {
     {
       id: "o-07",
       view: "objeto",
+      partida: "Partida ficticia de muestra",
       entity: "Casa Nube",
       category: "Tinta de luna",
       source: "Fondo de papel",
@@ -146,6 +154,7 @@ const rowsByView: Readonly<Record<View, readonly SyntheticRow[]>> = {
     {
       id: "o-08",
       view: "objeto",
+      partida: "Partida ficticia de muestra",
       entity: "Club Cometa",
       category: "Tinta de luna",
       source: "Caja de colores",
@@ -167,6 +176,7 @@ export type QueryOptions = Readonly<{
   search?: string;
   entity?: string;
   category?: string;
+  partida?: string;
   source?: string;
   sortBy?: SortBy;
   sortDirection?: SortDirection;
@@ -203,6 +213,7 @@ export function querySyntheticRows({
   search = "",
   entity,
   category,
+  partida,
   source,
   sortBy = "category",
   sortDirection = "asc",
@@ -217,11 +228,12 @@ export function querySyntheticRows({
     .filter(
       (row) =>
         (!needle ||
-          normalize(`${row.entity} ${row.category} ${row.source}`).includes(
-            needle,
-          )) &&
+          normalize(
+            `${row.entity} ${row.category} ${row.partida ?? ""} ${row.source}`,
+          ).includes(needle)) &&
         (!entity || row.entity === entity) &&
         (!category || row.category === category) &&
+        (!partida || (view === "objeto" && row.partida === partida)) &&
         (!source || row.source === source),
     );
   const direction = sortDirection === "desc" ? -1 : 1;

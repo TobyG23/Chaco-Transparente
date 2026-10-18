@@ -139,6 +139,19 @@ builtTest(
     );
     if (process.env.CHACO_FRESH_EXPORT === "1") {
       expect(datos).toContain(syntheticDisclaimer);
+      expect(datos).toContain('id="catalogo-oficial"');
+      expect(datos).toContain('id="pendientes-datos"');
+      expect(datos).toContain(
+        "Registros oficiales: consultar en origen; no alojados aquí.",
+      );
+      expect(datos).toContain("2026-10-18");
+      expect(datos).toContain("Esta fecha no indica cuándo se obtuvo el CSV.");
+      expect(datos).toContain('href="/proyecto/#colaboracion"');
+      expect(datos).not.toMatch(/\/download\/|\.csv(?:["?])/i);
+      for (const resource of resourcePages) {
+        expect(datos).toContain(resource.href);
+        expect(datos).toContain(resource.id);
+      }
       const clientScripts = await Promise.all(
         files
           .filter((file) => file.endsWith(".js"))

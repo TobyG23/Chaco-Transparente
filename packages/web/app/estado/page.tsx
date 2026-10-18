@@ -10,7 +10,7 @@ export default function EstadoPage() {
     <>
       <PageIntro
         eyebrow="05 / ESTADO ACTUAL"
-        title="En revisión. Sin cifras publicadas."
+        title="Catálogo enlazado. Cifras aún bloqueadas."
       >
         El núcleo local pasó controles técnicos para las copias auditadas, pero
         su resultado exige revisión humana. Ningún importe ni registro
@@ -22,9 +22,10 @@ export default function EstadoPage() {
             <p className="eyebrow">DISPONIBILIDAD</p>
             <h2>Qué se puede consultar hoy</h2>
             <p>
-              Las fuentes y el método, más un explorador interactivo con tabla y
-              cantidades ficticias rotuladas como demostración. No ofrece filas,
-              descargas ni importes presupuestarios oficiales.
+              Un catálogo con enlaces a las dos fichas oficiales de 2022, las
+              preguntas documentales abiertas y una demostración interactiva con
+              cantidades ficticias. No ofrece filas, descargas ni importes
+              presupuestarios oficiales.
             </p>
           </div>
           <span className="state-pill">

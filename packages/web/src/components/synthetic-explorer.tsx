@@ -27,7 +27,9 @@ export function SyntheticExplorer() {
   const [loadState, setLoadState] = useState<LoadState>("loading");
   const [view, setView] = useState<View>("finalidad");
   const [search, setSearch] = useState("");
+  const [entity, setEntity] = useState("");
   const [category, setCategory] = useState("");
+  const [partida, setPartida] = useState("");
   const [source, setSource] = useState("");
   const [sortBy, setSortBy] = useState<SortBy>("entity");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
@@ -52,12 +54,22 @@ export function SyntheticExplorer() {
     () => syntheticRows.filter((row) => row.view === view),
     [view],
   );
+  const entities = [...new Set(choices.map((row) => row.entity))].sort();
   const categories = [...new Set(choices.map((row) => row.category))].sort();
+  const partidas = [
+    ...new Set(
+      choices
+        .map((row) => row.partida)
+        .filter((value): value is string => Boolean(value)),
+    ),
+  ].sort();
   const sources = [...new Set(choices.map((row) => row.source))].sort();
   const result = querySyntheticRows({
     view,
     search,
+    entity,
     category,
+    partida,
     source,
     sortBy,
     sortDirection,
@@ -69,7 +81,9 @@ export function SyntheticExplorer() {
   function changeView(next: View) {
     setView(next);
     setSearch("");
+    setEntity("");
     setCategory("");
+    setPartida("");
     setSource("");
     setPage(1);
   }
@@ -128,11 +142,29 @@ export function SyntheticExplorer() {
               setSearch(event.target.value);
               setPage(1);
             }}
-            placeholder="Entidad, categoría o fuente"
+            placeholder="Entidad, categoría, partida o fuente ficticias"
           />
         </label>
         <label>
-          Categoría
+          Entidad ficticia
+          <select
+            aria-label="Entidad ficticia"
+            value={entity}
+            onChange={(event) => {
+              setEntity(event.target.value);
+              setPage(1);
+            }}
+          >
+            <option value="">Todas las entidades</option>
+            {entities.map((item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          {view === "finalidad" ? "Finalidad ficticia" : "Objeto ficticio"}
           <select
             value={category}
             onChange={(event) => {
@@ -148,8 +180,28 @@ export function SyntheticExplorer() {
             ))}
           </select>
         </label>
+        {view === "objeto" && (
+          <label>
+            Partida ficticia
+            <select
+              aria-label="Partida ficticia"
+              value={partida}
+              onChange={(event) => {
+                setPartida(event.target.value);
+                setPage(1);
+              }}
+            >
+              <option value="">Todas las partidas</option>
+              {partidas.map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
         <label>
-          Fuente
+          Fuente ficticia
           <select
             value={source}
             onChange={(event) => {
@@ -166,6 +218,10 @@ export function SyntheticExplorer() {
           </select>
         </label>
       </div>
+      <p className="explorer-context">
+        {DEMO_LABEL}. Todos los filtros y resultados de esta tabla corresponden
+        sólo a filas inventadas.
+      </p>
       <p className="explorer-status" role="status" aria-live="polite">
         {loadState === "loading"
           ? "Cargando demostración sintética…"

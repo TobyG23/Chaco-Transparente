@@ -44,7 +44,12 @@ test("navigation defines exactly the six editorial routes", () => {
   for (const resource of resourcePages) {
     expect(resource.href).toBe(`${datasetUrl}/archivo/${resource.id}`);
     expect(resource.href).not.toMatch(/\/download\/|\.csv(?:$|\?)/i);
+    expect(resource.metadataChecked).toBe("2026-10-18");
+    expect(resource.dimensions).toContain("Entidad");
   }
+  expect(resourcePages[0]?.dimensions).toContain("CODFTE");
+  expect(resourcePages[1]?.dimensions).toContain("Q_FTE");
+  expect(resourcePages[1]?.dimensions).toContain("partida");
 });
 
 test("each navigation route has a static page and no API routes", async () => {

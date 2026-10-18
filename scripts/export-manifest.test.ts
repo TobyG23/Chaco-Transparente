@@ -33,6 +33,7 @@ async function fixture(): Promise<string> {
     "proyecto",
     "estado",
     "cobertura",
+    "deuda",
     "404",
     "_not-found",
   ]) {

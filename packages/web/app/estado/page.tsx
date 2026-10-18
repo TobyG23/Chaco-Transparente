@@ -10,7 +10,7 @@ export default function EstadoPage() {
     <>
       <PageIntro
         eyebrow="05 / ESTADO ACTUAL"
-        title="Catálogo enlazado. Cifras aún bloqueadas."
+        title="Gasto en revisión. Deuda con fuente verificable."
       >
         El núcleo local pasó controles técnicos para las copias auditadas, pero
         su resultado exige revisión humana. Ningún importe ni registro
@@ -25,7 +25,9 @@ export default function EstadoPage() {
               Un catálogo con enlaces a las dos fichas oficiales de 2022, las
               preguntas documentales abiertas y una demostración interactiva con
               cantidades ficticias. No ofrece filas, descargas ni importes
-              presupuestarios oficiales.
+              presupuestarios oficiales. Por separado, la sección de deuda
+              muestra seis observaciones oficiales del stock provincial con su
+              fuente y unidades.
             </p>
           </div>
           <span className="state-pill">

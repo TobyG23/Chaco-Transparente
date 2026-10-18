@@ -4,30 +4,30 @@ import { datasetUrl, resourcePages } from "../src/content";
 const topics = [
   {
     title: "Presupuesto",
-    state: "Cobertura parcial",
+    state: "Consulta propia pendiente",
     detail:
-      "Hay fichas de ejecución del gasto de 2022. No presentamos aquí el presupuesto aprobado ni una serie histórica.",
+      "Hay fichas de ejecución del gasto de 2022, pero no una consulta propia del presupuesto aprobado ni una serie histórica.",
     href: "/datos#catalogo-oficial",
     action: "Ver fichas de ejecución",
-    available: true,
+    available: false,
   },
   {
     title: "Gastos",
-    state: "Fuentes enlazadas",
+    state: "Consulta propia pendiente",
     detail:
-      "Dos clasificaciones de la misma ejecución acumulada de enero a diciembre de 2022. Los registros se consultan en origen y las vistas no se suman.",
+      "Dos fichas de la misma ejecución acumulada de 2022; los registros sólo se consultan en origen y las vistas no se suman.",
     href: "/datos#catalogo-oficial",
-    action: "Consultar las dos vistas",
-    available: true,
+    action: "Ver las dos fichas",
+    available: false,
   },
   {
     title: "Deuda",
-    state: "Sin cobertura en este portal",
+    state: "Serie oficial disponible",
     detail:
-      "Todavía no incorporamos una fuente de deuda al catálogo. No mostramos saldos, vencimientos ni indicadores.",
-    href: "/cobertura",
-    action: "Consultar el alcance del tema",
-    available: false,
+      "Consultá el stock provincial sin deuda flotante en seis cortes verificados entre 2022 y junio de 2026. No representa servicios ni emisiones nuevas.",
+    href: "/deuda",
+    action: "Explorar la serie de deuda",
+    available: true,
   },
   {
     title: "Transferencias",
@@ -64,8 +64,8 @@ export default function HomePage() {
             <p className="home-lede">
               Empezamos por enlazar fuentes oficiales de ejecución del gasto de
               Chaco. Podés consultar las fichas originales o probar cómo sería
-              explorar datos con un ejemplo sintético. Ninguna cifra oficial se
-              publica en este sitio.
+              explorar datos con un ejemplo sintético. Los importes oficiales de
+              gasto no se alojan aquí; la serie de deuda tiene su propia fuente.
             </p>
             <div className="home-actions">
               <Link
@@ -93,17 +93,21 @@ export default function HomePage() {
               <p>
                 <strong>Fichas oficiales</strong>
                 <span>
-                  Enlaces al portal de origen, sin copias ni importes aquí.
+                  Ejecución 2022: enlaces al origen, sin importes alojados aquí.
                 </span>
+              </p>
+              <p>
+                <strong>Deuda provincial</strong>
+                <span>Seis cortes oficiales con gráfico, tabla y origen.</span>
               </p>
               <p>
                 <strong>Exploración de prueba</strong>
                 <span>Datos inventados y señalados como sintéticos.</span>
               </p>
               <p>
-                <strong>Cobertura pendiente</strong>
+                <strong>Consultas pendientes</strong>
                 <span>
-                  Deuda, transferencias y contrataciones no están incorporadas.
+                  Presupuesto, gastos, transferencias y contrataciones.
                 </span>
               </p>
             </div>
@@ -168,10 +172,10 @@ export default function HomePage() {
           <div className="home-sources-intro">
             <h2 id="sources-title">Empezar por la fuente</h2>
             <p>
-              El catálogo actual enlaza dos recursos de ejecución presupuestaria
-              provincial. Ambos declaran un período acumulado de enero a
-              diciembre de 2022 en sus títulos: son desgloses de la misma
-              ejecución, no dos montos para sumar ni una serie mensual.
+              El catálogo de gastos enlaza dos recursos de ejecución
+              presupuestaria provincial. Ambos declaran un período acumulado de
+              enero a diciembre de 2022 en sus títulos: son desgloses de la
+              misma ejecución, no dos montos para sumar ni una serie mensual.
             </p>
             <Link href="/fuentes">Cómo identificamos las fuentes</Link>
           </div>
@@ -204,9 +208,10 @@ export default function HomePage() {
           <h2 id="next-title">Explorar sin confundir</h2>
           <p>
             La demostración permite probar filtros y vistas con cantidades
-            ficticias. Para cualquier registro oficial, consultá las fichas de
-            origen. Antes de publicar importes aquí faltan decisiones sobre
-            unidad, significado, derechos y privacidad.
+            ficticias de gasto. Para los importes oficiales de ejecución,
+            consultá las fichas de origen: faltan revisiones de unidad,
+            significado, derechos y privacidad. La deuda tiene una serie oficial
+            separada.
           </p>
         </div>
         <div className="home-next-actions">

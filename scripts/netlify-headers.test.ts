@@ -23,6 +23,7 @@ async function fixture(): Promise<string> {
     "proyecto",
     "estado",
     "cobertura",
+    "deuda",
   ]) {
     await mkdir(join(root, section));
   }
@@ -37,6 +38,7 @@ async function fixture(): Promise<string> {
     "proyecto/index.html",
     "estado/index.html",
     "cobertura/index.html",
+    "deuda/index.html",
   ]) {
     await writeFile(
       join(root, path),
@@ -81,6 +83,7 @@ test("denies style attributes when the export has none", async () => {
     "proyecto/index.html",
     "estado/index.html",
     "cobertura/index.html",
+    "deuda/index.html",
   ]) {
     await writeFile(join(root, path), "<script>ok</script>");
   }

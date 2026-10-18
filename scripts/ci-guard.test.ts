@@ -60,6 +60,7 @@ test("downloaded export must match its manifest before use", async () => {
       "proyecto",
       "estado",
       "cobertura",
+      "deuda",
     ]) {
       await mkdir(join(exportRoot, page));
       await writeFile(join(exportRoot, page, "index.html"), links);
@@ -96,7 +97,7 @@ test("downloaded export must match its manifest before use", async () => {
       "@layer theme,base,utilities;@layer theme{--tw-color:test}@layer utilities{}",
     );
     await writeFile(manifestPath, JSON.stringify(await scanExport(exportRoot)));
-    expect(await checkCi(exportRoot, manifestPath)).toBe(17);
+    expect(await checkCi(exportRoot, manifestPath)).toBe(18);
     const contentLicense = join(exportRoot, "LICENSE-CONTENT.txt");
     await writeFile(contentLicense, "changed license");
     await writeFile(manifestPath, JSON.stringify(await scanExport(exportRoot)));
@@ -126,7 +127,7 @@ test("downloaded export must match its manifest before use", async () => {
       await readFile(join(root, "LICENSE-CONTENT.txt")),
     );
     await writeFile(manifestPath, JSON.stringify(await scanExport(exportRoot)));
-    expect(await checkCi(exportRoot, manifestPath)).toBe(17);
+    expect(await checkCi(exportRoot, manifestPath)).toBe(18);
     const noticePath = join(exportRoot, "third-party-notices.txt");
     await writeFile(noticePath, "altered notice");
     await writeFile(manifestPath, JSON.stringify(await scanExport(exportRoot)));
@@ -154,7 +155,7 @@ test("downloaded export must match its manifest before use", async () => {
       '19.3.0-canary-278794d7-20261002 rendererPackageName:"react-dom" process.binding is not supported process.chdir is not supported',
     );
     await writeFile(manifestPath, JSON.stringify(await scanExport(exportRoot)));
-    expect(await checkCi(exportRoot, manifestPath)).toBe(17);
+    expect(await checkCi(exportRoot, manifestPath)).toBe(18);
     await writeFile(join(exportRoot, "_headers"), "/\n");
     expect(checkCi(exportRoot, manifestPath)).rejects.toThrow("differs");
     await writeFile(

@@ -63,6 +63,9 @@ test("each navigation route has a static page and no API routes", async () => {
   expect(
     (await readFile(join(webRoot, "app/cobertura/page.tsx"), "utf8")).length,
   ).toBeGreaterThan(0);
+  expect(
+    (await readFile(join(webRoot, "app/deuda/page.tsx"), "utf8")).length,
+  ).toBeGreaterThan(0);
   const app = await readdir(join(webRoot, "app"), { recursive: true });
   expect(app.some((name) => /(^|[\\/])route\.(ts|tsx)$/.test(name))).toBe(
     false,

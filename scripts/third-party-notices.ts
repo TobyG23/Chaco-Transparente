@@ -101,7 +101,7 @@ export async function assertBundledEvidence(exportRoot: string): Promise<void> {
   const files = await readdir(chunks);
   const js = files.filter((name) => name.endsWith(".js"));
   const css = files.filter((name) => name.endsWith(".css"));
-  if (!js.length || css.length !== 1)
+  if (!js.length || !css.length)
     throw new Error(
       "Unexpected JS/CSS asset inventory; review third-party notices",
     );
@@ -109,11 +109,16 @@ export async function assertBundledEvidence(exportRoot: string): Promise<void> {
   let canaryHits = 0;
   let rendererHits = 0;
   let processHits = 0;
-  const cssText = await readFile(join(chunks, css[0]), "utf8");
+  const cssTexts = await Promise.all(
+    css.map((name) => readFile(join(chunks, name), "utf8")),
+  );
   if (
-    !cssText.includes("@layer theme") ||
-    !cssText.includes("@layer utilities") ||
-    !cssText.includes("--tw-")
+    cssTexts.filter(
+      (text) =>
+        text.includes("@layer theme") &&
+        text.includes("@layer utilities") &&
+        text.includes("--tw-"),
+    ).length !== 1
   )
     throw new Error("Compiled Tailwind CSS evidence changed");
   for (const name of js) {

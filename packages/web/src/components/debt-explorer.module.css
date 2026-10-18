@@ -1,0 +1,142 @@
+.explorer {
+  padding: 32px 0 55px;
+}
+.controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  margin: 22px 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.controls select {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 400;
+  max-width: 100%;
+}
+.controls select:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+.raw {
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.heading h2 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+}
+.unit {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--blue);
+}
+.context {
+  max-width: 820px;
+  color: var(--muted);
+  margin: 20px 0 28px;
+}
+.figure {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 20px 16px 12px;
+}
+.chart {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.grid {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+.axis {
+  fill: var(--muted);
+  font-size: 11px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.line {
+  stroke: var(--blue);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.dot {
+  fill: var(--blue);
+  stroke: var(--paper);
+  stroke-width: 2;
+}
+.hit {
+  cursor: crosshair;
+}
+.hit:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+.readout {
+  min-height: 1.8em;
+  margin: 5px 6px 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.tableWrap {
+  max-width: 100%;
+  overflow-x: auto;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  margin-top: 25px;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 660px;
+  font-size: 0.88rem;
+}
+.table caption {
+  text-align: left;
+  padding: 12px 16px;
+  background: var(--soft);
+  font-weight: 700;
+}
+.table th,
+.table td {
+  text-align: left;
+  border-top: 1px solid var(--line);
+  padding: 12px 16px;
+}
+.table thead {
+  background: var(--soft);
+}
+.table .numeric {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.table a {
+  color: var(--blue);
+  font-weight: 700;
+}
+@media (max-width: 640px) {
+  .figure {
+    padding: 12px 3px;
+  }
+  .axis {
+    font-size: 12px;
+  }
+  .readout {
+    margin: 9px 12px;
+  }
+}

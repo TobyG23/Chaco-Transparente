@@ -54,7 +54,11 @@ builtTest(
           expect(html).toContain(`href="/${license}"`);
       expect(html).not.toContain("This page could not be found");
     }
-    for (const { href } of [...navigation, { href: "/cobertura" }]) {
+    for (const { href } of [
+      ...navigation,
+      { href: "/cobertura" },
+      { href: "/deuda" },
+    ]) {
       const page = join(outRoot, href, "index.html");
       expect(files.has(page)).toBe(true);
       const html = await readFile(page, "utf8");
@@ -66,7 +70,8 @@ builtTest(
       expect(html).toContain('id="contenido"');
       expect(html).toContain('href="#contenido"');
       expect(html).toContain("<main");
-      if (href !== "/cobertura") expect(html).toContain('aria-current="page"');
+      if (!["/cobertura", "/deuda"].includes(href))
+        expect(html).toContain('aria-current="page"');
       if (process.env.CHACO_FRESH_EXPORT === "1")
         for (const license of [
           "LICENSE",
@@ -116,8 +121,10 @@ builtTest(
       );
     }
     const cssFiles = files.filter((file) => file.endsWith(".css"));
-    expect(cssFiles).toHaveLength(1);
-    const css = await readFile(cssFiles[0], "utf8");
+    expect(cssFiles.length).toBeGreaterThan(0);
+    const css = (
+      await Promise.all(cssFiles.map((file) => readFile(file, "utf8")))
+    ).join("\n");
     expect(css).toMatch(/\.status-strip a:focus-visible[^}]*outline-color:/);
     expect(css).toMatch(/\.site-footer a:focus-visible[^}]*outline-color:/);
     const datos = await readFile(join(outRoot, "datos", "index.html"), "utf8");

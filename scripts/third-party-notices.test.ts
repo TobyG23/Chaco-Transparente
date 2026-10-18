@@ -43,7 +43,13 @@ test("bundled evidence rejects changed polyfill, React markers and stylesheet", 
     await writeFile(polyfillPath, await readFile(polyfill));
     await writeFile(appPath, app);
     await writeFile(cssPath, css);
+    await writeFile(join(chunks, "debt.css"), ".debt{color:teal}");
     await expect(assertBundledEvidence(root)).resolves.toBeUndefined();
+    await writeFile(join(chunks, "debt.css"), css);
+    expect(assertBundledEvidence(root)).rejects.toThrow(
+      "Tailwind CSS evidence changed",
+    );
+    await writeFile(join(chunks, "debt.css"), ".debt{color:teal}");
     await writeFile(polyfillPath, "different");
     expect(assertBundledEvidence(root)).rejects.toThrow("evidence changed");
     await writeFile(polyfillPath, await readFile(polyfill));

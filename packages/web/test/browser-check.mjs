@@ -11,6 +11,7 @@ const routes = [
   "/proyecto/",
   "/estado/",
   "/cobertura/",
+  "/deuda/",
   "/404/",
 ];
 const targets = await (await fetch(`${debug}/json`)).json();
@@ -419,7 +420,8 @@ try {
         !state.main ||
         !state.skip ||
         state.links !== 6 ||
-        state.current !== (["/404/", "/cobertura/"].includes(route) ? 0 : 1) ||
+        state.current !==
+          (["/404/", "/cobertura/", "/deuda/"].includes(route) ? 0 : 1) ||
         !state.privacy ||
         !state.notice ||
         state.error ||
@@ -428,6 +430,50 @@ try {
         process.exitCode = 1;
       }
       if (route === "/datos/") await checkExplorer(width);
+      if (route === "/deuda/") {
+        const initial = await evaluate(`(() => ({
+          rows: document.querySelectorAll('table tbody tr').length,
+          originals: document.querySelector('table tbody')?.textContent.includes('101190519.09306316 miles de pesos'),
+          points: document.querySelectorAll('svg a[href^="#debt-row-"]').length,
+          label: document.querySelector('select#debt-range')?.value
+        }))()`);
+        check(
+          initial.rows === 6 &&
+            initial.points === 6 &&
+            initial.originals &&
+            initial.label === "all",
+          `${width}px debt initial`,
+          initial,
+        );
+        await setControl("select#debt-range", "2026");
+        let filtered;
+        for (let attempt = 0; attempt < 30; attempt++) {
+          filtered = await evaluate(
+            `(() => ({ rows: document.querySelectorAll('table tbody tr').length, points: document.querySelectorAll('svg a[href^="#debt-row-"]').length, years: [...document.querySelectorAll('table tbody time')].map(t => t.dateTime), overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 }))()`,
+          );
+          if (filtered.rows === 2) break;
+          await delay(100);
+        }
+        check(
+          filtered.rows === 2 &&
+            filtered.points === 2 &&
+            filtered.years.every((year) => year.startsWith("2026")) &&
+            !filtered.overflow,
+          `${width}px debt period filter`,
+          filtered,
+        );
+        await evaluate(
+          `document.querySelector('svg a[href^="#debt-row-"]').focus()`,
+        );
+        const focused = await evaluate(
+          `document.activeElement?.getAttribute('href')`,
+        );
+        check(
+          focused === "#debt-row-2026-03-31",
+          `${width}px debt keyboard focus`,
+          focused,
+        );
+      }
     }
   }
 } finally {

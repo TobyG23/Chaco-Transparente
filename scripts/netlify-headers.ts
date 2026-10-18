@@ -9,9 +9,15 @@ const htmlPaths = [
   "404.html",
   "404/index.html",
   "_not-found/index.html",
-  ...["datos", "fuentes", "metodologia", "proyecto", "estado", "cobertura"].map(
-    (section) => `${section}/index.html`,
-  ),
+  ...[
+    "datos",
+    "fuentes",
+    "metodologia",
+    "proyecto",
+    "estado",
+    "cobertura",
+    "deuda",
+  ].map((section) => `${section}/index.html`),
 ];
 
 function hash(text: string): string {

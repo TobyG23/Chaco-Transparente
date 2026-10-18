@@ -6,10 +6,10 @@ export const metadata: Metadata = { title: "Cobertura de datos" };
 
 const sources = [
   {
-    title: "Deuda y financiamiento",
-    status: "Archivo de emisiones; no es una serie de deuda total",
+    title: "Emisiones y financiamiento",
+    status: "Archivo provincial de emisiones; no es una serie de stock",
     description:
-      "La sección de Hacienda publica antecedentes de letras y financiamiento. No permite inferir el stock completo de deuda ni construir aquí una evolución comparable.",
+      "Hacienda publica antecedentes de letras y financiamiento. Para una serie separada de stock provincial sin deuda flotante, consultá la sección de deuda de este portal.",
     href: "https://hacienda.chaco.gob.ar/secciones/8",
     label: "Consultar archivo de Hacienda",
   },
@@ -35,12 +35,17 @@ export default function CoberturaPage() {
   return (
     <>
       <PageIntro eyebrow="COBERTURA" title="Cada tema, con su alcance real.">
-        Consultá las fuentes públicas en sus sitios de origen. No presentamos
-        cifras ni gráficos de deuda, transferencias o contrataciones sin datos
-        comparables y revisados para su publicación.
+        Consultá las fuentes públicas en sus sitios de origen. La serie de stock
+        provincial revisada se puede explorar en la sección de deuda; las
+        planillas de transferencias y los procedimientos de compra siguen en
+        origen.
       </PageIntro>
       <section className="shell section compact-section prose-section">
         <h2>Fuentes para seguir explorando</h2>
+        <p>
+          <Link href="/deuda">Explorar la serie oficial de stock de deuda</Link>
+          . El archivo de emisiones provincial tiene un alcance distinto.
+        </p>
         <p>
           Enlaces oficiales consultados el 18 de octubre de 2026. Su
           disponibilidad y actualización dependen de los organismos; enlazarlos
@@ -63,7 +68,7 @@ export default function CoberturaPage() {
           Para gastos de 2022, el{" "}
           <Link href="/datos#catalogo-oficial">catálogo de ejecución</Link>{" "}
           enlaza dos clasificaciones del mismo período; no se suman entre sí. No
-          hay aquí registros propios de estas otras áreas ni permisos de
+          hay aquí registros de transferencias o contrataciones ni permisos de
           republicación confirmados para sus archivos.
         </p>
       </section>

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     template: "%s | Chaco Transparente",
   },
   description:
-    "Proyecto independiente de transparencia: fuentes y metodología visibles. Los importes presupuestarios aún no están publicados.",
+    "Proyecto independiente de transparencia: serie oficial de deuda provincial, fuentes de gasto y metodología visibles. Los importes de ejecución presupuestaria aún no están publicados.",
   robots: { index: false, follow: false },
 };
 

@@ -59,7 +59,8 @@ export default function ProyectoPage() {
         <p>
           Los enlaces al portal oficial y a GitHub llevan a sitios ajenos sólo
           cuando decidís seguirlos; sus prácticas pueden ser diferentes. No
-          ofrecemos datos presupuestarios, filas ni importes en esta versión.
+          ofrecemos filas ni importes de ejecución presupuestaria en esta
+          versión; la sección de deuda presenta una serie oficial distinta.
         </p>
         <div className="rule" />
         <p className="eyebrow">COLABORACIÓN</p>

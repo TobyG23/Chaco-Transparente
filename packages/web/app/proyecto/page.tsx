@@ -35,21 +35,26 @@ export default function ProyectoPage() {
           institucional.
         </p>
         <div className="rule" />
-        <p className="eyebrow">PRIVACIDAD · TEXTO PARA REVISIÓN</p>
+        <p className="eyebrow">PRIVACIDAD · AVISO PROPUESTO PARA REVISIÓN</p>
         <h2 id="privacidad">Qué ocurre al visitar este portal</h2>
         <p>
-          La versión editorial revisada no incorpora cuentas, formularios,
-          analítica propia, píxeles de seguimiento ni almacenamiento deliberado
-          en el navegador. No solicita los archivos presupuestarios desde el
-          navegador. Las páginas y sus activos requieren solicitudes al
-          alojamiento; el proveedor y su red de entrega pueden tratar datos
-          técnicos de esas solicitudes, como dirección IP, URL, fecha y hora y
-          agente de usuario. Todavía debemos confirmar en la configuración y
-          condiciones reales de Netlify qué registros, métricas o cookies se
-          generan, quién accede a ellos, durante cuánto tiempo se conservan y en
-          qué jurisdicciones se tratan. También faltan la identificación y el
-          contacto de la persona responsable del portal. Este texto es una
-          explicación preliminar, no un aviso de privacidad aprobado.
+          Esta versión editorial estática no ofrece cuentas ni formularios y el
+          código propio revisado no incorpora analítica, píxeles de seguimiento,
+          cookies ni almacenamiento deliberado en el navegador. Tampoco solicita
+          archivos presupuestarios desde el navegador. Las páginas, sus activos
+          y la navegación necesitan solicitudes al alojamiento; eso no equivale
+          a afirmar que no se traten datos personales.
+        </p>
+        <p>
+          Netlify y su red de entrega pueden tratar datos técnicos de las
+          solicitudes, como dirección IP, URL, fecha y hora o agente de usuario.
+          No tenemos acceso en este proyecto a la configuración efectiva de
+          registros, métricas o cookies de la cuenta, ni a sus plazos de
+          conservación, accesos y jurisdicciones. Estas prácticas y cualquier
+          opción activada deben confirmarse en el panel y las condiciones del
+          proveedor antes de aprobar este aviso. La identificación y el contacto
+          de la persona responsable del portal también están pendientes: este
+          texto no es todavía un aviso de privacidad aprobado.
         </p>
         <p>
           Los enlaces al portal oficial y a GitHub llevan a sitios ajenos sólo

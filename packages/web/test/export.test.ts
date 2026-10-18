@@ -141,7 +141,9 @@ builtTest(
       }
       expect(fuentes).not.toMatch(/\/download\/|\.csv(?:["?])/i);
       expect(proyecto).toContain('id="privacidad"');
-      expect(proyecto).toContain("no un aviso de privacidad aprobado");
+      expect(proyecto).toContain(
+        "no es todavía un aviso de privacidad aprobado",
+      );
       const notices = await readFile(
         join(outRoot, "third-party-notices.txt"),
         "utf8",

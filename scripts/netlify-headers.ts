@@ -9,7 +9,7 @@ const htmlPaths = [
   "404.html",
   "404/index.html",
   "_not-found/index.html",
-  ...["datos", "fuentes", "metodologia", "proyecto", "estado"].map(
+  ...["datos", "fuentes", "metodologia", "proyecto", "estado", "cobertura"].map(
     (section) => `${section}/index.html`,
   ),
 ];

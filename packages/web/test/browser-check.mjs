@@ -10,6 +10,7 @@ const routes = [
   "/metodologia/",
   "/proyecto/",
   "/estado/",
+  "/cobertura/",
   "/404/",
 ];
 const targets = await (await fetch(`${debug}/json`)).json();
@@ -418,7 +419,7 @@ try {
         !state.main ||
         !state.skip ||
         state.links !== 6 ||
-        state.current !== (route === "/404/" ? 0 : 1) ||
+        state.current !== (["/404/", "/cobertura/"].includes(route) ? 0 : 1) ||
         !state.privacy ||
         !state.notice ||
         state.error ||

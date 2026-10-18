@@ -54,7 +54,7 @@ builtTest(
           expect(html).toContain(`href="/${license}"`);
       expect(html).not.toContain("This page could not be found");
     }
-    for (const { href } of navigation) {
+    for (const { href } of [...navigation, { href: "/cobertura" }]) {
       const page = join(outRoot, href, "index.html");
       expect(files.has(page)).toBe(true);
       const html = await readFile(page, "utf8");
@@ -66,7 +66,7 @@ builtTest(
       expect(html).toContain('id="contenido"');
       expect(html).toContain('href="#contenido"');
       expect(html).toContain("<main");
-      expect(html).toContain('aria-current="page"');
+      if (href !== "/cobertura") expect(html).toContain('aria-current="page"');
       if (process.env.CHACO_FRESH_EXPORT === "1")
         for (const license of [
           "LICENSE",

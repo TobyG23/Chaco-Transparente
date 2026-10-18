@@ -1,179 +1,220 @@
 import Link from "next/link";
-import { datasetUrl, views } from "../src/content";
+import { datasetUrl, resourcePages } from "../src/content";
+
+const topics = [
+  {
+    title: "Presupuesto",
+    state: "Cobertura parcial",
+    detail:
+      "Hay fichas de ejecución del gasto de 2022. No presentamos aquí el presupuesto aprobado ni una serie histórica.",
+    href: "/datos#catalogo-oficial",
+    action: "Ver fichas de ejecución",
+    available: true,
+  },
+  {
+    title: "Gastos",
+    state: "Fuentes enlazadas",
+    detail:
+      "Dos clasificaciones de la misma ejecución acumulada de enero a diciembre de 2022. Los registros se consultan en origen y las vistas no se suman.",
+    href: "/datos#catalogo-oficial",
+    action: "Consultar las dos vistas",
+    available: true,
+  },
+  {
+    title: "Deuda",
+    state: "Sin cobertura en este portal",
+    detail:
+      "Todavía no incorporamos una fuente de deuda al catálogo. No mostramos saldos, vencimientos ni indicadores.",
+    href: "/cobertura",
+    action: "Consultar el alcance del tema",
+    available: false,
+  },
+  {
+    title: "Transferencias",
+    state: "Sin cobertura en este portal",
+    detail:
+      "No hay registros de transferencias individuales publicados aquí. Una columna de pagos presupuestarios no identifica por sí sola a sus destinatarios.",
+    href: "/cobertura",
+    action: "Consultar el alcance del tema",
+    available: false,
+  },
+  {
+    title: "Contrataciones",
+    state: "Sin cobertura en este portal",
+    detail:
+      "Aún no incorporamos expedientes, licitaciones ni adjudicaciones. No inferimos contratos a partir de partidas de gasto.",
+    href: "/cobertura",
+    action: "Consultar el alcance del tema",
+    available: false,
+  },
+] as const;
 
 export default function HomePage() {
   return (
     <>
-      <section className="hero">
-        <div className="shell hero-grid">
-          <div className="hero-copy">
-            <p className="eyebrow">
-              <span className="eyebrow-line" /> PROYECTO INDEPENDIENTE · CHACO,
-              ARGENTINA
+      <section className="home-hero" aria-labelledby="home-title">
+        <div className="shell home-hero-grid">
+          <div className="home-hero-copy">
+            <p className="home-kicker">
+              Chaco Transparente · proyecto independiente
             </p>
-            <h1>
-              Los datos públicos merecen <em>contexto.</em>
+            <h1 id="home-title">
+              Información pública, con sus límites a la vista.
             </h1>
-            <p className="hero-lede">
-              Chaco Transparente prepara una forma clara y responsable de
-              explorar la ejecución presupuestaria provincial. Hoy compartimos
-              las fuentes, el método y lo que todavía falta verificar.
+            <p className="home-lede">
+              Empezamos por enlazar fuentes oficiales de ejecución del gasto de
+              Chaco. Podés consultar las fichas originales o probar cómo sería
+              explorar datos con un ejemplo sintético. Ninguna cifra oficial se
+              publica en este sitio.
             </p>
-            <div className="hero-actions">
-              <Link className="button button-primary" href="/datos">
-                Explorar el catálogo <span aria-hidden="true">↗</span>
+            <div className="home-actions">
+              <Link
+                className="button button-primary"
+                href="/datos#catalogo-oficial"
+              >
+                Consultar fuentes enlazadas
               </Link>
-              <Link className="text-link" href="/estado">
-                Ver estado del proyecto <span aria-hidden="true">→</span>
+              <Link className="text-link" href="#temas">
+                Buscar por tema
               </Link>
-            </div>
-            <p className="hero-footnote">
-              <span className="status-light" aria-hidden="true" /> Sin importes
-              ni registros publicados por este proyecto
-            </p>
-          </div>
-          <div className="hero-art" aria-hidden="true">
-            <div className="art-top">
-              <span>CT / 001</span>
-              <span>UNA MIRADA MÁS CLARA</span>
-            </div>
-            <div className="art-orbit orbit-one" />
-            <div className="art-orbit orbit-two" />
-            <div className="art-shape">
-              <div className="art-shape-inner" />
-            </div>
-            <div className="art-bottom">
-              <span>FUENTES</span>
-              <span>·</span>
-              <span>MÉTODO</span>
-              <span>·</span>
-              <span>CONTEXTO</span>
             </div>
           </div>
+          <aside
+            className="home-availability"
+            aria-label="Qué se puede consultar hoy"
+          >
+            <div className="home-availability-top">
+              <span className="home-availability-mark" aria-hidden="true">
+                CT
+              </span>
+              <span>Disponible en esta versión</span>
+            </div>
+            <div className="home-availability-body">
+              <p>
+                <strong>Fichas oficiales</strong>
+                <span>
+                  Enlaces al portal de origen, sin copias ni importes aquí.
+                </span>
+              </p>
+              <p>
+                <strong>Exploración de prueba</strong>
+                <span>Datos inventados y señalados como sintéticos.</span>
+              </p>
+              <p>
+                <strong>Cobertura pendiente</strong>
+                <span>
+                  Deuda, transferencias y contrataciones no están incorporadas.
+                </span>
+              </p>
+            </div>
+            <Link href="/estado">Conocer el estado de revisión</Link>
+          </aside>
         </div>
       </section>
 
-      <section className="status-strip" aria-label="Estado de la información">
-        <div className="shell strip-inner">
-          <span className="strip-label">ESTADO ACTUAL</span>
-          <strong>Los datos están en revisión.</strong>
-          <span>La publicación de cifras permanece bloqueada.</span>
-          <Link href="/estado">
-            Entender por qué <span aria-hidden="true">↗</span>
-          </Link>
-        </div>
-      </section>
-
-      <section className="section shell" aria-labelledby="que-encontras">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">01 / EL PUNTO DE PARTIDA</p>
-            <h2 id="que-encontras">
-              Transparencia también es decir <em>qué falta.</em>
-            </h2>
-          </div>
+      <div className="home-boundary">
+        <div className="shell home-boundary-inner">
+          <strong>Una distinción importante</strong>
           <p>
-            Antes de mostrar una cifra, necesitamos saber de dónde viene, qué
-            significa y si corresponde publicarla.
+            Las fichas oficiales se abren en Datos Abiertos Chaco. La
+            demostración de este sitio no usa registros oficiales.
           </p>
+          <Link href="/datos#explorer-title">Probar la demostración</Link>
         </div>
-        <div className="feature-grid">
-          <article className="feature-card">
-            <span className="feature-number">
-              01 <span aria-hidden="true">↗</span>
-            </span>
-            <h3>Fuentes identificadas</h3>
-            <p>
-              Trabajamos con dos vistas del conjunto oficial de ejecución
-              presupuestaria provincial acumulada de 2022.
-            </p>
-            <Link href="/fuentes">
-              Conocer las fuentes <span aria-hidden="true">→</span>
-            </Link>
-          </article>
-          <article className="feature-card">
-            <span className="feature-number">
-              02 <span aria-hidden="true">↗</span>
-            </span>
-            <h3>Método a la vista</h3>
-            <p>
-              El núcleo local verifica copias, conserva trazabilidad y señala
-              diferencias sin corregirlas silenciosamente.
-            </p>
-            <Link href="/metodologia">
-              Leer la metodología <span aria-hidden="true">→</span>
-            </Link>
-          </article>
-          <article className="feature-card">
-            <span className="feature-number">
-              03 <span aria-hidden="true">↗</span>
-            </span>
-            <h3>Límites explícitos</h3>
-            <p>
-              Moneda, unidad, interpretación, derechos y privacidad aún
-              requieren revisión antes de compartir importes.
-            </p>
-            <Link href="/estado">
-              Consultar pendientes <span aria-hidden="true">→</span>
-            </Link>
-          </article>
-        </div>
-      </section>
+      </div>
 
       <section
-        className="section muted-section"
-        aria-labelledby="catalogo-inicio"
+        className="shell home-topics"
+        id="temas"
+        aria-labelledby="topics-title"
       >
-        <div className="shell">
-          <div className="section-heading">
-            <div>
-              <p className="eyebrow">02 / ALCANCE</p>
-              <h2 id="catalogo-inicio">
-                Dos vistas. <em>Una misma ejecución.</em>
-              </h2>
-            </div>
+        <div className="home-section-head">
+          <div>
+            <h2 id="topics-title">Elegí qué querés consultar</h2>
             <p>
-              Son desgloses distintos del mismo período acumulado, no una serie
-              mensual ni valores que deban sumarse entre sí.
+              Cada tema indica el alcance real de este portal, no la
+              disponibilidad de datos en toda la provincia.
             </p>
           </div>
-          <div className="view-grid">
-            {views.map((view, index) => (
-              <article className="view-card" key={view.title}>
-                <span className="view-index">VISTA 0{index + 1}</span>
-                <h3>{view.title}</h3>
-                <p>{view.description}</p>
-                <span className="view-tag">
-                  Metadatos disponibles · cifras no publicadas
+          <Link href="/datos">Ir al catálogo y la demostración</Link>
+        </div>
+        <div className="home-topic-list">
+          {topics.map((topic) => (
+            <article className="home-topic" key={topic.title}>
+              <div className="home-topic-name">
+                <h3>{topic.title}</h3>
+                <span
+                  className={
+                    topic.available
+                      ? "home-topic-state is-linked"
+                      : "home-topic-state"
+                  }
+                >
+                  {topic.state}
                 </span>
-              </article>
-            ))}
-          </div>
-          <p className="section-note">
-            Fuente:{" "}
-            <a href={datasetUrl}>
-              portal de Datos Abiertos Chaco <span aria-hidden="true">↗</span>
-            </a>
-            . El período se toma del título de los recursos.
-          </p>
+              </div>
+              <p>{topic.detail}</p>
+              <Link href={topic.href}>
+                {topic.action}
+                <span aria-hidden="true"> ↗</span>
+              </Link>
+            </article>
+          ))}
         </div>
       </section>
 
-      <section className="section shell closing-section">
+      <section className="home-sources" aria-labelledby="sources-title">
+        <div className="shell home-sources-grid">
+          <div className="home-sources-intro">
+            <h2 id="sources-title">Empezar por la fuente</h2>
+            <p>
+              El catálogo actual enlaza dos recursos de ejecución presupuestaria
+              provincial. Ambos declaran un período acumulado de enero a
+              diciembre de 2022 en sus títulos: son desgloses de la misma
+              ejecución, no dos montos para sumar ni una serie mensual.
+            </p>
+            <Link href="/fuentes">Cómo identificamos las fuentes</Link>
+          </div>
+          <div className="home-source-list">
+            {resourcePages.map((resource) => (
+              <article className="home-source" key={resource.id}>
+                <span>Ficha oficial · ejecución del gasto 2022</span>
+                <h3>{resource.title}</h3>
+                <p>{resource.dimensions}</p>
+                <a href={resource.href}>
+                  Abrir ficha en Datos Abiertos Chaco{" "}
+                  <span aria-hidden="true">↗</span>
+                </a>
+              </article>
+            ))}
+            <p className="home-source-note">
+              Fuente:{" "}
+              <a href={datasetUrl}>
+                conjunto de Ejecución Presupuestaria en Datos Abiertos Chaco
+              </a>
+              . Este proyecto no es un sitio oficial ni publica aquí los
+              registros originales.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="shell home-next" aria-labelledby="next-title">
         <div>
-          <p className="eyebrow">03 / SUMATE AL PROCESO</p>
-          <h2>
-            La claridad se <em>construye.</em>
-          </h2>
+          <h2 id="next-title">Explorar sin confundir</h2>
           <p>
-            Este proyecto está en desarrollo. Podés conocer cómo trabajamos,
-            revisar el código y aportar preguntas o correcciones sin compartir
-            datos sensibles en público.
+            La demostración permite probar filtros y vistas con cantidades
+            ficticias. Para cualquier registro oficial, consultá las fichas de
+            origen. Antes de publicar importes aquí faltan decisiones sobre
+            unidad, significado, derechos y privacidad.
           </p>
         </div>
-        <Link className="button button-dark" href="/proyecto">
-          Conocer el proyecto <span aria-hidden="true">↗</span>
-        </Link>
+        <div className="home-next-actions">
+          <Link className="button button-dark" href="/datos#explorer-title">
+            Probar el ejemplo sintético
+          </Link>
+          <Link href="/metodologia">Leer la metodología</Link>
+        </div>
       </section>
     </>
   );

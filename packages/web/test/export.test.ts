@@ -44,7 +44,12 @@ builtTest(
       expect(html).toContain("<h1");
       expect(html).toContain('href="#contenido"');
       if (process.env.CHACO_FRESH_EXPORT === "1")
-        expect(html).toContain('href="/third-party-notices.txt"');
+        for (const license of [
+          "LICENSE",
+          "LICENSE-CONTENT.txt",
+          "third-party-notices.txt",
+        ])
+          expect(html).toContain(`href="/${license}"`);
       expect(html).not.toContain("This page could not be found");
     }
     for (const { href } of navigation) {
@@ -61,13 +66,22 @@ builtTest(
       expect(html).toContain("<main");
       expect(html).toContain('aria-current="page"');
       if (process.env.CHACO_FRESH_EXPORT === "1")
-        expect(html).toContain('href="/third-party-notices.txt"');
+        for (const license of [
+          "LICENSE",
+          "LICENSE-CONTENT.txt",
+          "third-party-notices.txt",
+        ])
+          expect(html).toContain(`href="/${license}"`);
       for (const [, target] of html.matchAll(
         /\bhref="(\/[^"?#]*)(?:[?#][^"]*)?"/g,
       )) {
         if (
           target.startsWith("/_next/") ||
-          target === "/third-party-notices.txt"
+          [
+            "/LICENSE",
+            "/LICENSE-CONTENT.txt",
+            "/third-party-notices.txt",
+          ].includes(target)
         ) {
           expect(files.has(join(outRoot, target.slice(1)))).toBe(true);
         } else {
@@ -89,7 +103,9 @@ builtTest(
         /(?:^|\/)(?:data|archive|private|\.env[^/]*)\//i,
       );
       expect(
-        relative === "_headers" || /\.(?:html|txt|js|css)$/i.test(relative),
+        relative === "_headers" ||
+          relative === "LICENSE" ||
+          /\.(?:html|txt|js|css)$/i.test(relative),
       ).toBe(true);
       const content = await readFile(file, "utf8");
       expect(content).not.toMatch(
@@ -134,6 +150,17 @@ builtTest(
       expect(notices).toContain("React DOM");
       expect(notices).toContain("Tailwind CSS 4.3.3");
       expect(notices).toContain("Copyright (c) 2014-2024 Denis Pushkarev");
+      const codeLicense = await readFile(join(outRoot, "LICENSE"), "utf8");
+      const contentLicense = await readFile(
+        join(outRoot, "LICENSE-CONTENT.txt"),
+        "utf8",
+      );
+      expect(codeLicense).toContain(
+        "Copyright (c) 2026 Chaco Transparente contributors",
+      );
+      expect(contentLicense).toContain(
+        "https://creativecommons.org/licenses/by/4.0/legalcode",
+      );
     }
     for (const view of views) expect(datos).toContain(view.title);
     for (const decision of pendingDecisions) expect(estado).toContain(decision);

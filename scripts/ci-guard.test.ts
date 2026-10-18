@@ -9,6 +9,7 @@ import {
   checkCi,
 } from "./ci-guard";
 import { scanExport } from "./export-manifest";
+import { firstPartyLicenses } from "./first-party-licenses";
 import { generateHeaders } from "./netlify-headers";
 import { renderNotices } from "./third-party-notices";
 
@@ -42,6 +43,9 @@ test("tracked paths exclude private files and original or derived data", () => {
 });
 
 test("downloaded export must match its manifest before use", async () => {
+  const root = resolve(import.meta.dir, "..");
+  const links =
+    '<script>editorial</script><a href="/third-party-notices.txt">Notices</a><a href="/LICENSE">Code</a><a href="/LICENSE-CONTENT.txt">Content</a>';
   const temporary = await mkdtemp(join(tmpdir(), "chaco-ci-guard-"));
   const exportRoot = join(temporary, "export");
   const manifestPath = join(temporary, "manifest.json");
@@ -57,23 +61,16 @@ test("downloaded export must match its manifest before use", async () => {
       "estado",
     ]) {
       await mkdir(join(exportRoot, page));
-      await writeFile(
-        join(exportRoot, page, "index.html"),
-        '<script>editorial</script><a href="/third-party-notices.txt">Notices</a>',
-      );
+      await writeFile(join(exportRoot, page, "index.html"), links);
     }
-    await writeFile(
-      join(exportRoot, "index.html"),
-      '<script>editorial</script><a href="/third-party-notices.txt">Notices</a>',
-    );
-    await writeFile(
-      join(exportRoot, "404.html"),
-      '<script>editorial</script><a href="/third-party-notices.txt">Notices</a>',
-    );
+    await writeFile(join(exportRoot, "index.html"), links);
+    await writeFile(join(exportRoot, "404.html"), links);
     await writeFile(
       join(exportRoot, "third-party-notices.txt"),
       await renderNotices(),
     );
+    for (const name of firstPartyLicenses)
+      await writeFile(join(exportRoot, name), await readFile(join(root, name)));
     await writeFile(
       join(exportRoot, "_headers"),
       await generateHeaders(exportRoot),
@@ -98,7 +95,37 @@ test("downloaded export must match its manifest before use", async () => {
       "@layer theme,base,utilities;@layer theme{--tw-color:test}@layer utilities{}",
     );
     await writeFile(manifestPath, JSON.stringify(await scanExport(exportRoot)));
-    expect(await checkCi(exportRoot, manifestPath)).toBe(14);
+    expect(await checkCi(exportRoot, manifestPath)).toBe(16);
+    const contentLicense = join(exportRoot, "LICENSE-CONTENT.txt");
+    await writeFile(contentLicense, "changed license");
+    await writeFile(manifestPath, JSON.stringify(await scanExport(exportRoot)));
+    expect(checkCi(exportRoot, manifestPath)).rejects.toThrow(
+      "First-party license differs",
+    );
+    await writeFile(
+      contentLicense,
+      await readFile(join(root, "LICENSE-CONTENT.txt")),
+    );
+    await writeFile(
+      join(exportRoot, "404.html"),
+      links.replace('href="/LICENSE"', 'href="/missing"'),
+    );
+    await writeFile(manifestPath, JSON.stringify(await scanExport(exportRoot)));
+    expect(checkCi(exportRoot, manifestPath)).rejects.toThrow(
+      "Missing first-party license link",
+    );
+    await writeFile(join(exportRoot, "404.html"), links);
+    await rm(contentLicense);
+    await writeFile(manifestPath, JSON.stringify(await scanExport(exportRoot)));
+    expect(checkCi(exportRoot, manifestPath)).rejects.toThrow(
+      "Export is missing first-party license",
+    );
+    await writeFile(
+      contentLicense,
+      await readFile(join(root, "LICENSE-CONTENT.txt")),
+    );
+    await writeFile(manifestPath, JSON.stringify(await scanExport(exportRoot)));
+    expect(await checkCi(exportRoot, manifestPath)).toBe(16);
     const noticePath = join(exportRoot, "third-party-notices.txt");
     await writeFile(noticePath, "altered notice");
     await writeFile(manifestPath, JSON.stringify(await scanExport(exportRoot)));
@@ -112,10 +139,7 @@ test("downloaded export must match its manifest before use", async () => {
     expect(checkCi(exportRoot, manifestPath)).rejects.toThrow(
       "Missing third-party notices link",
     );
-    await writeFile(
-      join(exportRoot, "index.html"),
-      '<script>editorial</script><a href="/third-party-notices.txt">Notices</a>',
-    );
+    await writeFile(join(exportRoot, "index.html"), links);
     await writeFile(
       join(exportRoot, "_next", "static", "chunks", "app.js"),
       "unknown",
@@ -129,7 +153,7 @@ test("downloaded export must match its manifest before use", async () => {
       '19.3.0-canary-278794d7-20261002 rendererPackageName:"react-dom" process.binding is not supported process.chdir is not supported',
     );
     await writeFile(manifestPath, JSON.stringify(await scanExport(exportRoot)));
-    expect(await checkCi(exportRoot, manifestPath)).toBe(14);
+    expect(await checkCi(exportRoot, manifestPath)).toBe(16);
     await writeFile(join(exportRoot, "_headers"), "/\n");
     expect(checkCi(exportRoot, manifestPath)).rejects.toThrow("differs");
     await writeFile(

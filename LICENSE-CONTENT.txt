@@ -1,0 +1,11 @@
+Licencia y atribución del contenido original — Chaco Transparente
+
+Los textos editoriales y el diseño visual originales creados para Chaco Transparente se ofrecen bajo Creative Commons Atribución 4.0 Internacional (CC BY 4.0):
+https://creativecommons.org/licenses/by/4.0/
+Texto legal: https://creativecommons.org/licenses/by/4.0/legalcode
+
+Atribución sugerida: «Chaco Transparente», con enlace a https://github.com/TobyG23/Chaco-Transparente y a la licencia CC BY 4.0; indicá los cambios realizados cuando corresponda. Esta licencia se aplica sólo a materiales originales sobre los que quienes contribuyeron al proyecto tienen derechos para concederla.
+
+No cubre el código original del proyecto (MIT, archivo LICENSE), el software o activos de terceros (que conservan sus propias licencias y atribuciones), nombres o marcas ajenos, ni recursos oficiales, sus metadatos, CSV, filas, importes o derivados presupuestarios. Los enlaces y las referencias a fuentes oficiales no convierten esos materiales en obras propias ni conceden permisos de republicación. Los avisos de software de terceros distribuido se encuentran en third-party-notices.txt.
+
+Esta declaración de licencia no autoriza por sí sola el despliegue de este portal ni la publicación de datos presupuestarios.

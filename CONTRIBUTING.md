@@ -8,4 +8,4 @@ Este repositorio contiene un núcleo **offline** de ingestión para dos vistas p
 4. Revisar **cada archivo** antes de proponerlo: nunca incluir CSV oficiales, derivados presupuestarios, secretos, `.env`, logs, caches o carpetas temporales. `.gitignore` no impide `git add -f`.
 5. No afirmar semántica normativa para `Q_*`, moneda/unidad, licencia de los datos ni permiso de publicación mientras permanezcan pendientes. No copiar código o activos de proyectos de referencia sin verificar sus derechos y atribución.
 
-La licencia para el código propio todavía no está decidida; no se concede aquí permiso de reutilización. Para asuntos de seguridad, consultar `SECURITY.md`.
+El código original del proyecto se ofrece bajo [MIT](LICENSE); los textos y el diseño originales, bajo [CC BY 4.0](LICENSE-CONTENT.txt). Quien contribuya debe poder conceder derechos compatibles sobre su aporte y señalar material ajeno y su atribución; estas licencias no cubren recursos oficiales ni materiales de terceros. Para asuntos de seguridad, consultar `SECURITY.md`.

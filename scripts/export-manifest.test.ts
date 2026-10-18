@@ -93,6 +93,21 @@ test("includes only the reviewed third-party notices path and detects alteration
   expect(scanExport(root)).rejects.toThrow("Unexpected export path");
 });
 
+test("permits only exact first-party license names and detects altered bytes", async () => {
+  const root = await fixture();
+  await writeFile(join(root, "LICENSE"), "MIT text");
+  await writeFile(join(root, "LICENSE-CONTENT.txt"), "CC BY text");
+  const approved = await scanExport(root);
+  expect(approved.files.some((file) => file.path === "LICENSE")).toBe(true);
+  expect(
+    approved.files.some((file) => file.path === "LICENSE-CONTENT.txt"),
+  ).toBe(true);
+  await writeFile(join(root, "LICENSE"), "changed");
+  expect(verifyExport(root, approved)).rejects.toThrow("Export differs");
+  await writeFile(join(root, "LICENSE-EXTRA.txt"), "unexpected");
+  expect(scanExport(root)).rejects.toThrow("Unexpected export path");
+});
+
 test("rejects unexpected assets and changed hashes", async () => {
   const root = await fixture();
   const before = await scanExport(root);

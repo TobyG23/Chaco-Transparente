@@ -62,8 +62,11 @@ export default function ProyectoPage() {
         <p>
           Podés revisar el repositorio, los criterios de contribución y los
           pendientes. Evitá publicar información sensible en incidencias
-          abiertas. La licencia del código propio sigue pendiente de decisión;
-          el acceso al repositorio no implica permiso de reutilización.
+          abiertas. El código original del proyecto se ofrece bajo MIT; los
+          textos editoriales y el diseño originales, bajo CC BY 4.0. Las
+          dependencias conservan sus licencias y avisos propios. Estas licencias
+          no abarcan recursos oficiales ni conceden permiso para republicar
+          datos.
         </p>
         <a className="button button-primary" href={repositoryUrl}>
           Ver el repositorio <span aria-hidden="true">↗</span>

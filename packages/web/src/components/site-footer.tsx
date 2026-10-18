@@ -20,6 +20,10 @@ export function SiteFooter() {
           <Link href="/proyecto#privacidad">
             Privacidad (texto en revisión)
           </Link>
+          <a href="/LICENSE">Código original: MIT</a>
+          <a href="/LICENSE-CONTENT.txt">
+            Textos y diseño originales: CC BY 4.0
+          </a>
           <a href="/third-party-notices.txt">Avisos de software de terceros</a>
           <a href={datasetUrl}>
             Fuente oficial <span aria-hidden="true">↗</span>

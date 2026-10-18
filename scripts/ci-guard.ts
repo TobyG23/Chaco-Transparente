@@ -5,6 +5,10 @@ import {
   scanExport,
   verifyExport,
 } from "./export-manifest";
+import {
+  firstPartyLicenses,
+  verifyFirstPartyLicenses,
+} from "./first-party-licenses";
 import { generateHeaders } from "./netlify-headers";
 import { noticeName, verifyNotices } from "./third-party-notices";
 
@@ -79,6 +83,11 @@ export async function checkCi(
     throw new Error("Export is missing third-party notices");
   }
   await verifyNotices(artifactRoot);
+  for (const name of firstPartyLicenses) {
+    if (!manifest.files.some((file) => file.path === name))
+      throw new Error(`Export is missing first-party license: ${name}`);
+  }
+  await verifyFirstPartyLicenses(artifactRoot);
   const actualHeaders = await readFile(
     resolve(artifactRoot, "_headers"),
     "utf8",

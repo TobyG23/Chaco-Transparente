@@ -13,7 +13,7 @@
     "lint": "biome check .",
     "web:dev": "bun run --filter @chaco/web dev",
     "web:build": "bun run --filter @chaco/web build",
-    "web:verify": "NEXT_TELEMETRY_DISABLED=1 bun run web:build && bun scripts/third-party-notices.ts generate && CHACO_FRESH_EXPORT=1 bun test packages/web/test/export.test.ts",
+    "web:verify": "NEXT_TELEMETRY_DISABLED=1 bun run web:build && bun scripts/third-party-notices.ts generate && bun scripts/first-party-licenses.ts generate && CHACO_FRESH_EXPORT=1 bun test packages/web/test/export.test.ts",
     "web:netlify": "bun install --frozen-lockfile --ignore-scripts && bun run lint && bun run --filter @chaco/core typecheck && bun run --filter @chaco/ingestion typecheck && bun run --filter @chaco/web typecheck && bun run test && bun run web:verify && bun scripts/netlify-headers.ts generate && bun scripts/export-manifest.ts inventory"
   },
   "devDependencies": {

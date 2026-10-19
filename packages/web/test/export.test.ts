@@ -58,6 +58,7 @@ builtTest(
       ...navigation,
       { href: "/cobertura" },
       { href: "/deuda" },
+      { href: "/presupuesto" },
     ]) {
       const page = join(outRoot, href, "index.html");
       expect(files.has(page)).toBe(true);
@@ -70,7 +71,7 @@ builtTest(
       expect(html).toContain('id="contenido"');
       expect(html).toContain('href="#contenido"');
       expect(html).toContain("<main");
-      if (!["/cobertura", "/deuda"].includes(href))
+      if (!["/cobertura", "/deuda", "/presupuesto"].includes(href))
         expect(html).toContain('aria-current="page"');
       if (process.env.CHACO_FRESH_EXPORT === "1")
         for (const license of [

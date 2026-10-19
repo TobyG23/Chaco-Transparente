@@ -17,6 +17,7 @@ const htmlPaths = [
     "estado",
     "cobertura",
     "deuda",
+    "presupuesto",
   ].map((section) => `${section}/index.html`),
 ];
 

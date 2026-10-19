@@ -1,0 +1,139 @@
+.explorer {
+  padding: 28px 0 48px;
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 15px;
+  margin-bottom: 14px;
+  font-weight: 700;
+}
+.controls input,
+.controls select {
+  min-height: 44px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  padding: 8px 12px;
+  font: inherit;
+  max-width: 100%;
+}
+.controls input:focus-visible,
+.controls select:focus-visible,
+.barRow:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+.figure {
+  margin: 24px 0;
+  padding: 22px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+}
+.figure h2 {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+.figure p,
+.figure figcaption {
+  color: var(--muted);
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  margin: 18px 0;
+  font-size: 0.85rem;
+}
+.currentKey,
+.capitalKey {
+  width: 16px;
+  height: 12px;
+  display: inline-block;
+}
+.currentKey,
+.current {
+  background: var(--blue);
+}
+.capitalKey,
+.capital {
+  background: #b97837;
+}
+.bars {
+  display: grid;
+  gap: 12px;
+}
+.barRow {
+  display: grid;
+  grid-template-columns: minmax(170px, 260px) minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 0.85rem;
+}
+.barRow:hover .barName,
+.barRow:focus-visible .barName {
+  text-decoration: underline;
+}
+.track {
+  display: flex;
+  height: 17px;
+  min-width: 0;
+  background: var(--soft);
+}
+.current,
+.capital {
+  height: 100%;
+  display: block;
+}
+.tableWrap {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  background: var(--paper);
+}
+.tableWrap table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 770px;
+  font-size: 0.87rem;
+}
+.tableWrap caption {
+  text-align: left;
+  padding: 13px;
+  background: var(--soft);
+  font-weight: 700;
+}
+.tableWrap th,
+.tableWrap td {
+  padding: 11px;
+  border-top: 1px solid var(--line);
+  text-align: left;
+}
+.tableWrap thead,
+.tableWrap tfoot {
+  background: var(--soft);
+}
+.tableWrap td:nth-child(2),
+.tableWrap td:nth-child(3),
+.tableWrap td:nth-child(4) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.tableWrap a {
+  color: var(--blue);
+  font-weight: 700;
+}
+@media (max-width: 640px) {
+  .figure {
+    padding: 14px;
+  }
+  .barRow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+}

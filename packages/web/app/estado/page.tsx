@@ -10,11 +10,12 @@ export default function EstadoPage() {
     <>
       <PageIntro
         eyebrow="05 / ESTADO ACTUAL"
-        title="Gasto en revisión. Deuda con fuente verificable."
+        title="Gasto en revisión. Presupuesto y deuda con fuentes verificables."
       >
         El núcleo local pasó controles técnicos para las copias auditadas, pero
-        su resultado exige revisión humana. Ningún importe ni registro
-        presupuestario se conecta a este portal.
+        su resultado exige revisión humana. Ningún importe ni registro de los
+        CSV de ejecución 2022 se conecta a este portal; la ley presupuestaria
+        original de 2024 se consulta por separado.
       </PageIntro>
       <section className="shell section compact-section">
         <div className="state-panel">
@@ -24,10 +25,12 @@ export default function EstadoPage() {
             <p>
               Un catálogo con enlaces a las dos fichas oficiales de 2022, las
               preguntas documentales abiertas y una demostración interactiva con
-              cantidades ficticias. No ofrece filas, descargas ni importes
-              presupuestarios oficiales. Por separado, la sección de deuda
-              muestra seis observaciones oficiales del stock provincial con su
-              fuente y unidades.
+              cantidades ficticias. No ofrece filas, descargas ni importes de
+              ejecución de los CSV de 2022. La sección de deuda muestra seis
+              observaciones oficiales del stock provincial con su fuente y
+              unidades. La sección de presupuesto transcribe por separado 11
+              organismos de la ley original de 2024; no representa ejecución ni
+              incorpora los CSV de 2022.
             </p>
           </div>
           <span className="state-pill">

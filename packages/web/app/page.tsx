@@ -4,12 +4,12 @@ import { datasetUrl, resourcePages } from "../src/content";
 const topics = [
   {
     title: "Presupuesto",
-    state: "Consulta propia pendiente",
+    state: "Presupuesto aprobado 2024",
     detail:
-      "Hay fichas de ejecución del gasto de 2022, pero no una consulta propia del presupuesto aprobado ni una serie histórica.",
-    href: "/datos#catalogo-oficial",
-    action: "Ver fichas de ejecución",
-    available: false,
+      "Consultá los 11 organismos del artículo 1 de la Ley 3968-F, con erogaciones corrientes y de capital. Es el presupuesto original, no el vigente ni el ejecutado.",
+    href: "/presupuesto",
+    action: "Explorar presupuesto aprobado",
+    available: true,
   },
   {
     title: "Gastos",
@@ -64,8 +64,9 @@ export default function HomePage() {
             <p className="home-lede">
               Empezamos por enlazar fuentes oficiales de ejecución del gasto de
               Chaco. Podés consultar las fichas originales o probar cómo sería
-              explorar datos con un ejemplo sintético. Los importes oficiales de
-              gasto no se alojan aquí; la serie de deuda tiene su propia fuente.
+              explorar datos con un ejemplo sintético. Los importes de ejecución
+              de 2022 no se alojan aquí; el presupuesto aprobado de 2024 y la
+              serie de deuda tienen fuentes propias.
             </p>
             <div className="home-actions">
               <Link
@@ -97,6 +98,12 @@ export default function HomePage() {
                 </span>
               </p>
               <p>
+                <strong>Presupuesto aprobado 2024</strong>
+                <span>
+                  Once organismos de la ley original, con gráfico y tabla.
+                </span>
+              </p>
+              <p>
                 <strong>Deuda provincial</strong>
                 <span>Seis cortes oficiales con gráfico, tabla y origen.</span>
               </p>
@@ -107,7 +114,8 @@ export default function HomePage() {
               <p>
                 <strong>Consultas pendientes</strong>
                 <span>
-                  Presupuesto, gastos, transferencias y contrataciones.
+                  Gastos, transferencias y contrataciones. El presupuesto
+                  inicial de 2024 tiene una consulta separada.
                 </span>
               </p>
             </div>
@@ -210,8 +218,8 @@ export default function HomePage() {
             La demostración permite probar filtros y vistas con cantidades
             ficticias de gasto. Para los importes oficiales de ejecución,
             consultá las fichas de origen: faltan revisiones de unidad,
-            significado, derechos y privacidad. La deuda tiene una serie oficial
-            separada.
+            significado, derechos y privacidad. El presupuesto aprobado de 2024
+            y la deuda tienen consultas oficiales separadas.
           </p>
         </div>
         <div className="home-next-actions">

@@ -21,9 +21,10 @@ export default function ProyectoPage() {
         <h2>Claridad antes que velocidad.</h2>
         <p>
           El núcleo offline procesa dos vistas provinciales acumuladas de 2022 y
-          conserva su procedencia. Este portal es por ahora una capa editorial:
-          muestra fuentes, metodología y estado, no registros presupuestarios.
-          No representa un presupuesto municipal completo ni una serie mensual.
+          conserva su procedencia sin publicar esos CSV. Por separado, este
+          portal transcribe el artículo 1 del presupuesto original de 2024 y una
+          serie de deuda con fuentes distintas. No representa un presupuesto
+          municipal completo ni una serie mensual.
         </p>
         <div className="rule" />
         <p className="eyebrow">INDEPENDENCIA</p>
@@ -60,7 +61,8 @@ export default function ProyectoPage() {
           Los enlaces al portal oficial y a GitHub llevan a sitios ajenos sólo
           cuando decidís seguirlos; sus prácticas pueden ser diferentes. No
           ofrecemos filas ni importes de ejecución presupuestaria en esta
-          versión; la sección de deuda presenta una serie oficial distinta.
+          versión; presupuesto aprobado de 2024 y deuda se presentan con fuentes
+          oficiales distintas.
         </p>
         <div className="rule" />
         <p className="eyebrow">COLABORACIÓN</p>

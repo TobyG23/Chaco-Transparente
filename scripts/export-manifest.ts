@@ -18,6 +18,7 @@ const pages = new Set([
   "estado",
   "cobertura",
   "deuda",
+  "presupuesto",
 ]);
 const htmlPaths = new Set([
   "index.html",
@@ -80,7 +81,7 @@ function allowedDirectory(path: string): boolean {
   if (/^_next\/[A-Za-z0-9_-]+$/.test(path)) return true;
   if (/^_next\/static\/[A-Za-z0-9_-][A-Za-z0-9._-]*$/.test(path)) return true;
   if (
-    /^(?:datos|fuentes|metodologia|proyecto|estado|cobertura|deuda|_not-found)\/__next\.[A-Za-z0-9_-]+$/.test(
+    /^(?:datos|fuentes|metodologia|proyecto|estado|cobertura|deuda|presupuesto|_not-found)\/__next\.[A-Za-z0-9_-]+$/.test(
       path,
     )
   )

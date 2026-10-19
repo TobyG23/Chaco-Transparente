@@ -12,6 +12,7 @@ const routes = [
   "/estado/",
   "/cobertura/",
   "/deuda/",
+  "/presupuesto/",
   "/404/",
 ];
 const targets = await (await fetch(`${debug}/json`)).json();
@@ -421,7 +422,9 @@ try {
         !state.skip ||
         state.links !== 6 ||
         state.current !==
-          (["/404/", "/cobertura/", "/deuda/"].includes(route) ? 0 : 1) ||
+          (["/404/", "/cobertura/", "/deuda/", "/presupuesto/"].includes(route)
+            ? 0
+            : 1) ||
         !state.privacy ||
         !state.notice ||
         state.error ||
@@ -430,6 +433,50 @@ try {
         process.exitCode = 1;
       }
       if (route === "/datos/") await checkExplorer(width);
+      if (route === "/presupuesto/") {
+        const initial = await evaluate(
+          `(() => ({ rows: document.querySelectorAll('table tbody tr').length, bars: document.querySelectorAll('a[href^="#budget-row-"]').length, total: document.querySelector('#budget-total')?.textContent, overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 }))()`,
+        );
+        check(
+          initial.rows === 11 &&
+            initial.bars === 11 &&
+            initial.total?.includes("1.607.496.288.371") &&
+            !initial.overflow,
+          `${width}px budget initial`,
+          initial,
+        );
+        await setControl("input#budget-search", "Tribunal");
+        let filtered;
+        for (let attempt = 0; attempt < 30; attempt++) {
+          filtered = await evaluate(
+            `(() => ({ rows: document.querySelectorAll('table tbody tr').length, bars: document.querySelectorAll('a[href^="#budget-row-"]').length, status: document.querySelector('[role="status"]')?.textContent }))()`,
+          );
+          if (filtered.rows === 2) break;
+          await delay(100);
+        }
+        check(
+          filtered.rows === 2 &&
+            filtered.bars === 2 &&
+            filtered.status?.includes("2 organismos"),
+          `${width}px budget search`,
+          filtered,
+        );
+        await setControl("input#budget-search", "");
+        await setControl("select#budget-category", "capital");
+        let capital;
+        for (let attempt = 0; attempt < 30; attempt++) {
+          capital = await evaluate(
+            `(() => ({ rows: document.querySelectorAll('table tbody tr').length, status: document.querySelector('[role="status"]')?.textContent }))()`,
+          );
+          if (capital.rows === 9) break;
+          await delay(100);
+        }
+        check(
+          capital.rows === 9 && capital.status?.includes("9 organismos"),
+          `${width}px budget capital`,
+          capital,
+        );
+      }
       if (route === "/deuda/") {
         const initial = await evaluate(`(() => ({
           rows: document.querySelectorAll('table tbody tr').length,
